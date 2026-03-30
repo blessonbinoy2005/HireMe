@@ -2,6 +2,8 @@
 
 ## 1. Clone the Repository
 
+First open VsCode then go inside the folder where you will want the HireMe project
+
 👉 This downloads the project to your computer
 
 ⚠️ Do NOT create the HireMe folder yourself
@@ -59,7 +61,7 @@ npm install
 
 ```bash
 cd server
-node server.js
+npm run dev
 ```
 
 ### Start frontend (new terminal)
