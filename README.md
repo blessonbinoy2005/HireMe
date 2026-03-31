@@ -101,9 +101,24 @@ git commit -m "describe your changes"
 
 👉 This uploads your work to GitHub
 
+⚠️ First time pushing a branch, run:
+
 ```bash
-git push origin your-name-feature
+git push --set-upstream origin your-name-feature
 ```
+After that, you can just use:
+
+```bash
+git push
+```
+
+After the FIRST push
+Once you’ve already done: - git push --set-upstream origin your-branch
+You never need to do that again for that branch.
+Just do: (remember this is after you already did git push --set-upstream origin your-name-feature)
+git add .
+git commit -m "what you changed"
+git push
 
 ---
 
