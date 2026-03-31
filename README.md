@@ -126,6 +126,12 @@ git push
 ```
 ---
 
+## Side note
+If you want to check which branch your on just run:
+``` bash
+git branch
+```
+
 ## 8. Open a Pull Request
 
 👉 This asks Blesson to review and add your code to main
