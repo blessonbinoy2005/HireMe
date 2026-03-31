@@ -113,13 +113,17 @@ git push
 ```
 
 After the FIRST push
-Once you’ve already done: - git push --set-upstream origin your-branch
-You never need to do that again for that branch.
+Once you’ve already done: - 
+``` bash 
+git push --set-upstream origin your-branch
+``` 
+You never need to do that again for THAT branch.
 Just do: (remember this is after you already did git push --set-upstream origin your-name-feature)
+``` bash
 git add .
 git commit -m "what you changed"
 git push
-
+```
 ---
 
 ## 8. Open a Pull Request
