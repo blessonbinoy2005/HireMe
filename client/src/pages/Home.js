@@ -1,10 +1,12 @@
 import React from "react";
+import Navbar from "../components/navbar";
 
 function Home() {
   return (
-    <div>
-      <h1>Hello World</h1>
-    </div>
+    <>
+      <Navbar />
+      {/* later: Hero,m SearchBar, map, etc, etc.*/}
+    </>
   );
 }
 

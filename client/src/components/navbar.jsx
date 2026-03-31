@@ -16,6 +16,13 @@ function Navbar() {
                     <span>HireMe</span>
                 </a>
             </div>
+
+            <div className="nav-right">
+                <a className="nav-link" href="/">Log in</a>
+                <a href="/">
+                    <button className="signup-btn">Sign up</button>
+                </a>
+            </div>
         </nav>
     )
 }
