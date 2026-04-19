@@ -1,22 +1,33 @@
-const express = require("express")
+require("dotenv").config();
+const express = require("express");
 const cors = require("cors");
+
+const connectDB = require("./config/db");
+const authRoutes = require("./routes/authRoutes");
 
 const app = express();
 
-//middleware
+// Middleware
 app.use(cors());
 app.use(express.json());
 
-//test route
+// Test route
 app.get("/", (req, res) => {
     res.send("Backend is running");
 });
 
-// start server
-app.listen(9000, () => {
-    console.log("Server running on port 9000");
-});
+// Feature routes (API logic lives in controllers/*)
+app.use("/api/auth", authRoutes);
 
-// to start to server 
-// go inside server folder (cd server)
-// then run (npm run dev)
+// Start server after DB connects
+const PORT = process.env.PORT || 9000;
+connectDB()
+    .then(() => {
+        app.listen(PORT, () => {
+            console.log(`Server running on port ${PORT}`);
+        });
+    })
+    .catch((err) => {
+        console.error("Failed to connect to MongoDB:", err.message);
+        process.exit(1);
+    });
