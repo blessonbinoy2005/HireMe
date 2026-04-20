@@ -1,22 +1,22 @@
-const express = require("express")
+require("dotenv").config();
+
+const express = require("express");
 const cors = require("cors");
+const mongoose = require("mongoose");
 
 const app = express();
 
-//middleware
-app.use(cors());
+// middleware
 app.use(express.json());
+app.use(cors());
 
-//test route
-app.get("/", (req, res) => {
-    res.send("Backend is running");
-});
+// MongoDB connection
+mongoose
+  .connect(process.env.MONGO_URI)
+  .then(() => console.log("Database Connected"))
+  .catch((err) => console.log(err));
 
 // start server
 app.listen(9000, () => {
-    console.log("Server running on port 9000");
+  console.log("Server Started at 9000");
 });
-
-// to start to server 
-// go inside server folder (cd server)
-// then run (npm run dev)
