@@ -25,6 +25,7 @@ const UserSchema = new mongoose.Schema({
     type: String,
     enum: ["job_seeker", "recruiter", "career_advisor", "system_admin"],
     required: true,
+    default: "job_seeker",
   },
 });
 
