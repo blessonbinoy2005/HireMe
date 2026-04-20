@@ -14,10 +14,10 @@ const CompanySchema = new mongoose.Schema({
     type: String,
     trim: true,
   },
-  companyDescription: {
-    type: String,
-    trim: true,
-  },
+  // companyDescription: {
+  //   type: String,
+  //   trim: true,
+  // },
 });
 
 module.exports = mongoose.model("Company", CompanySchema);
