@@ -2,6 +2,14 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 
+function ok(data) {
+    return { success: true, data };
+}
+
+function fail(message) {
+    return { success: false, error: { message } };
+}
+
 function signToken(user) {
     return jwt.sign(
         { sub: user._id.toString(), email: user.email, role: user.role },
@@ -25,18 +33,18 @@ async function register(req, res) {
         const { firstName, lastName, email, password, confirmPassword } = req.body || {};
 
         if (!firstName || !lastName || !email || !password) {
-            return res.status(400).json({ message: "All fields are required." });
+            return res.status(400).json(fail("All fields are required."));
         }
         if (password.length < 8) {
-            return res.status(400).json({ message: "Password must be at least 8 characters." });
+            return res.status(400).json(fail("Password must be at least 8 characters."));
         }
         if (confirmPassword !== undefined && confirmPassword !== password) {
-            return res.status(400).json({ message: "Passwords do not match." });
+            return res.status(400).json(fail("Passwords do not match."));
         }
 
         const existing = await User.findOne({ email: email.toLowerCase() });
         if (existing) {
-            return res.status(409).json({ message: "An account with that email already exists." });
+            return res.status(409).json(fail("An account with that email already exists."));
         }
 
         const passwordHash = await bcrypt.hash(password, 10);
@@ -48,10 +56,10 @@ async function register(req, res) {
         });
 
         const token = signToken(user);
-        return res.status(201).json({ token, user: publicUser(user) });
+        return res.status(201).json(ok({ token, user: publicUser(user) }));
     } catch (err) {
         console.error("register error:", err);
-        return res.status(500).json({ message: "Server error creating account." });
+        return res.status(500).json(fail("Server error creating account."));
     }
 }
 
@@ -59,35 +67,35 @@ async function login(req, res) {
     try {
         const { email, password } = req.body || {};
         if (!email || !password) {
-            return res.status(400).json({ message: "Email and password are required." });
+            return res.status(400).json(fail("Email and password are required."));
         }
 
         const user = await User.findOne({ email: email.toLowerCase() });
         if (!user) {
-            return res.status(401).json({ message: "Invalid email or password." });
+            return res.status(401).json(fail("Invalid email or password."));
         }
 
-        const ok = await bcrypt.compare(password, user.passwordHash);
-        if (!ok) {
-            return res.status(401).json({ message: "Invalid email or password." });
+        const match = await bcrypt.compare(password, user.passwordHash);
+        if (!match) {
+            return res.status(401).json(fail("Invalid email or password."));
         }
 
         const token = signToken(user);
-        return res.json({ token, user: publicUser(user) });
+        return res.json(ok({ token, user: publicUser(user) }));
     } catch (err) {
         console.error("login error:", err);
-        return res.status(500).json({ message: "Server error during login." });
+        return res.status(500).json(fail("Server error during login."));
     }
 }
 
 async function me(req, res) {
     try {
         const user = await User.findById(req.userId);
-        if (!user) return res.status(404).json({ message: "User not found." });
-        return res.json({ user: publicUser(user) });
+        if (!user) return res.status(404).json(fail("User not found."));
+        return res.json(ok({ user: publicUser(user) }));
     } catch (err) {
         console.error("me error:", err);
-        return res.status(500).json({ message: "Server error." });
+        return res.status(500).json(fail("Server error."));
     }
 }
 
