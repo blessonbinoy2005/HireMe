@@ -1,11 +1,9 @@
 import React from "react";
-import Navbar from "../components/navbar";
 
 function Home() {
   return (
     <>
-      <Navbar />
-      {/* later: Hero,m SearchBar, map, etc, etc.*/}
+      {/* later: Hero, SearchBar, map, etc. */}
     </>
   );
 }
