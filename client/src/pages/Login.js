@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useAuth } from "../context/AuthContext";
 import "../css/auth.css";
 
 const API_BASE = process.env.REACT_APP_API_BASE || "http://localhost:9000";
 
 function Login() {
     const navigate = useNavigate();
+    const { login } = useAuth();
     const [form, setForm] = useState({ email: "", password: "" });
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
@@ -20,8 +22,7 @@ function Login() {
         try {
             const res = await axios.post(`${API_BASE}/api/auth/login`, form);
             const { token, user } = res.data.data;
-            localStorage.setItem("token", token);
-            localStorage.setItem("user", JSON.stringify(user));
+            login(token, user);
             navigate("/");
         } catch (err) {
             setError(err.response?.data?.error?.message || "Login failed. Try again.");
