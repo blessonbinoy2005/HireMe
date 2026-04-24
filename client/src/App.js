@@ -25,6 +25,7 @@ function App() {
           import JobsPage from "./pages/JobsPage";
 
           <Route path="/jobs" element={<JobsPage />} />
+          <Route path="/jobs" element={<JobsPage />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>
