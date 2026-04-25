@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import JobsPage from "./pages/JobPage";
+import Profile from "./pages/Profile";
 
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
           {/* Routes with Navbar */}
           <Route element={<MainLayout />}>
             <Route path="/" element={<Home />} />
+            <Route path="/profile" element={<Profile />} />
           </Route>
 
           {/* Routes without Navbar */}

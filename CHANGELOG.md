@@ -1,14 +1,25 @@
 # Changelog
 
-## 2026-04-21 — Tahsina Mahdiah
+## 2026-04-25, Tahsina Mahdiah
 
-- Server auth APIs implemented (register, login, me) with JWT-based authentication.
-- `User.role` defaults to `job_seeker` so registration works without the client supplying a role. _Note: to be discussed further._
-- Signup and Login frontend pages implemented and wired to the auth APIs.
-- Styling added for the Signup and Login pages via `client/src/css/auth.css`.
-- Auth API documentation added under `docs/auth-api.md`.
-- Shared Navbar now renders on all non-auth pages via a `MainLayout` wrapper — no need to add it per page.
-- Navbar restyled to match the prototype and a `Tracker` link added.
-- Global design tokens and base styles moved to `main.css` so all pages share one look; font fixes applied in `auth.css`.
-- AuthContext added for instant UI updates on login/logout.
-- Profile chip + dropdown replacing the Log in / Sign up buttons when signed in.
+- Added the job seeker profile page at /profile.
+- Added GET and PUT /api/profile, both behind verifyToken.
+- Expanded JobSeekerProfile: headline, currentStatus (enum), country, education[], experience[]. Dropped employmentStatus.
+- Profile page has six sections: Account, About, Location, Contact & Resume, Education, Experience. Each section edits independently and saves via the same PUT endpoint.
+- Education and Experience are repeatable lists with add/remove and a "current" toggle that disables the end date.
+- Country picker uses a dropdown of ISO countries.
+- Date fields use the browser's native date picker.
+- Added a shared useProfileSave hook so the cards share the PUT logic.
+
+## 2026-04-21, Tahsina Mahdiah
+
+- Added auth APIs: register, login, me. JWT auth.
+- User.role defaults to job_seeker so registration doesn't fail without one. To be discussed.
+- Built Signup and Login pages, wired to the APIs.
+- Styled the auth pages (auth.css).
+- Wrote auth API docs in docs/auth-api.md.
+- Added a shared Navbar via MainLayout. No need to add it on each page.
+- Updated Navbar styling to match the prototype, added a Tracker link.
+- Moved shared tokens and base styles into main.css. Cleaned up font issues in auth.css.
+- Added AuthContext so login/logout updates the UI right away.
+- Navbar shows a profile chip + dropdown when signed in instead of Log in / Sign up.
