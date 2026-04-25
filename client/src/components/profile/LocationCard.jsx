@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import useProfileSave from "../../hooks/useProfileSave";
+import useProfileSave from "./useProfileSave";
 import COUNTRIES from "../../utils/countries";
 
 function LocationCard({ profile, onSaved }) {

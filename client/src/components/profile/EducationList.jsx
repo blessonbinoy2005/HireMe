@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import useProfileSave from "../../hooks/useProfileSave";
+import useProfileSave from "./useProfileSave";
 
 const EMPTY_ROW = {
     school: "",
@@ -37,6 +37,12 @@ function EducationList({ education, onSaved }) {
         setEditing(false);
         setRows(education || []);
     };
+
+    const sortedEducation = [...(education || [])].sort((a, b) => {
+        const aKey = a.current ? "9999-12-31" : (a.endDate || a.startDate || "");
+        const bKey = b.current ? "9999-12-31" : (b.endDate || b.startDate || "");
+        return bKey.localeCompare(aKey);
+    });
 
     return (
         <section className="profile-card">
@@ -138,8 +144,8 @@ function EducationList({ education, onSaved }) {
                         <button type="button" className="btn-outline" onClick={cancel}>Cancel</button>
                     </div>
                 </form>
-            ) : education && education.length > 0 ? (
-                education.map((e, i) => (
+            ) : sortedEducation.length > 0 ? (
+                sortedEducation.map((e, i) => (
                     <div key={i} className="profile-row-view">
                         <div className="profile-value"><strong>{e.school || "-"}</strong></div>
                         {(e.degree || e.field) && (

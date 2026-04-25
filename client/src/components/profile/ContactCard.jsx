@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import useProfileSave from "../../hooks/useProfileSave";
+import useProfileSave from "./useProfileSave";
 
 function ContactCard({ profile, onSaved }) {
     const [editing, setEditing] = useState(false);

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import useProfileSave from "../../hooks/useProfileSave";
+import useProfileSave from "./useProfileSave";
 
 const STATUS_OPTIONS = [
     { value: "", label: "-" },

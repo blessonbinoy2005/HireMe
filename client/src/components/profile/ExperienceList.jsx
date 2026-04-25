@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import useProfileSave from "../../hooks/useProfileSave";
+import useProfileSave from "./useProfileSave";
 
 const EMPTY_ROW = {
     title: "",
@@ -52,6 +52,12 @@ function ExperienceList({ experience, onSaved }) {
         setEditing(false);
         setRows(experience || []);
     };
+
+    const sortedExperience = [...(experience || [])].sort((a, b) => {
+        const aKey = a.current ? "9999-12-31" : (a.endDate || a.startDate || "");
+        const bKey = b.current ? "9999-12-31" : (b.endDate || b.startDate || "");
+        return bKey.localeCompare(aKey);
+    });
 
     return (
         <section className="profile-card">
@@ -174,8 +180,8 @@ function ExperienceList({ experience, onSaved }) {
                         <button type="button" className="btn-outline" onClick={cancel}>Cancel</button>
                     </div>
                 </form>
-            ) : experience && experience.length > 0 ? (
-                experience.map((x, i) => (
+            ) : sortedExperience.length > 0 ? (
+                sortedExperience.map((x, i) => (
                     <div key={i} className="profile-row-view">
                         <div className="profile-value">
                             <strong>{x.title || "-"}</strong>
