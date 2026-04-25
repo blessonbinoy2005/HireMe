@@ -3,6 +3,7 @@ import axios from "axios";
 import { useSearchParams } from "react-router-dom";
 import "../css/JobPage.css";
 import Navbar from "../components/navbar";
+import JobMap from "../components/JobMap";
 
 function JobsPage() {
   const [searchParams] = useSearchParams();
@@ -49,6 +50,7 @@ function JobsPage() {
       <Navbar />
 
       <div className="jobs-page">
+        {/* FILTER BAR */}
         <div className="jobs-filter-bar">
           <div className="jobs-search-input">
             <span>🔍</span>
@@ -124,12 +126,15 @@ function JobsPage() {
           </button>
         </div>
 
+        {/* MAIN CONTENT */}
         <div className="jobs-content">
+          
+          {/* MAP SECTION */}
           <div className="map-placeholder">
-            <h2>Map Area</h2>
-            <p>Map will be added here later.</p>
+            <JobMap jobs={jobs} />
           </div>
 
+          {/* JOB LIST */}
           <div className="jobs-list-section">
             <div className="jobs-list-header">
               <h1>Job Results</h1>

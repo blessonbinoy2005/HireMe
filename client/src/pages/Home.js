@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "../css/Home.css"
 
 
+
 function Home() {
   const [search, setSearch] = useState("");
   const navigate = useNavigate();
