@@ -69,7 +69,7 @@ async function upsertProfile(req, res) {
         const profile = await JobSeekerProfile.findOneAndUpdate(
             { userId: req.userId },
             { $set: update, $setOnInsert: { userId: req.userId } },
-            { new: true, upsert: true, runValidators: true }
+            { returnDocument: "after", upsert: true, runValidators: true }
         );
 
         return res.json(ok({ profile }));
