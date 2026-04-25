@@ -4,6 +4,7 @@ import MainLayout from "./components/MainLayout";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import Profile from "./pages/Profile";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
           {/* Routes with Navbar */}
           <Route element={<MainLayout />}>
             <Route path="/" element={<Home />} />
+            <Route path="/profile" element={<Profile />} />
           </Route>
 
           {/* Routes without Navbar */}
