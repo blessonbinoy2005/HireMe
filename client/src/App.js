@@ -4,7 +4,9 @@ import MainLayout from "./components/MainLayout";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import JobsPage from "./pages/JobPage";
 import Profile from "./pages/Profile";
+
 
 function App() {
   return (
@@ -20,6 +22,12 @@ function App() {
           {/* Routes without Navbar */}
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
+
+          <Route path="/" element={<Home />} />
+          import JobsPage from "./pages/JobsPage";
+
+          <Route path="/jobs" element={<JobsPage />} />
+          <Route path="/jobs" element={<JobsPage />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>

@@ -7,6 +7,9 @@ const connectDB = require("./config/db");
 const authRoutes = require("./routes/authRoutes");
 const profileRoutes = require("./routes/profileRoutes");
 
+//db imports
+const Job = require("./models/Job");
+
 const app = express();
 
 // middleware
@@ -34,3 +37,70 @@ connectDB()
         console.error("Failed to connect to MongoDB:", err.message);
         process.exit(1);
     });
+
+
+
+    app.get("/jobs", async (req, res) => {
+        try {
+          console.log("REQ QUERY:", req.query);
+      
+          const { keyword, jobType, salary, remote, moreFilter } = req.query;
+      
+          let filter = {};
+      
+          if (keyword) {
+            filter.$or = [
+              { jobTitle: { $regex: keyword, $options: "i" } },
+              { companyName: { $regex: keyword, $options: "i" } },
+              { jobDescription: { $regex: keyword, $options: "i" } },
+              { address: { $regex: keyword, $options: "i" } },
+            ];
+          }
+      
+          if (jobType || remote) {
+            filter.$and = [];
+      
+            if (jobType) {
+              filter.$and.push({
+                employmentType: { $regex: jobType, $options: "i" },
+              });
+            }
+      
+            if (remote) {
+              filter.$and.push({
+                employmentType: { $regex: remote, $options: "i" },
+              });
+            }
+          }
+      
+          if (moreFilter === "deadline") {
+            filter.applicationDeadlineDate = {
+              $lte: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000),
+            };
+          }
+      
+          let jobs = await Job.find(filter);
+      
+          if (salary) {
+            jobs = jobs.filter((job) => {
+              if (!job.salaryRange) return false;
+      
+              const nums = job.salaryRange.match(/\d+/g);
+              if (!nums) return false;
+      
+              const maxNum = Math.max(...nums.map(Number));
+      
+              return maxNum >= Number(salary);
+            });
+          }
+      
+          console.log("JOBS RETURNED:", jobs.length);
+      
+          res.json(jobs);
+        } catch (err) {
+          console.error("get jobs error:", err);
+          res.status(500).json({ message: "Failed to get jobs" });
+        }
+      });
+
+    
