@@ -1,0 +1,240 @@
+.profile-page {
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 40px 24px 80px;
+}
+
+.profile-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.profile-header h1 {
+  font-size: 2rem;
+}
+
+.profile-empty-page {
+  max-width: 520px;
+  margin: 80px auto;
+  text-align: center;
+  padding: 0 24px;
+}
+
+.profile-empty-page h1 {
+  font-size: 1.6rem;
+  margin-bottom: 10px;
+}
+
+.profile-card {
+  background: rgba(23, 23, 42, 0.7);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 22px 24px;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow);
+}
+
+.profile-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+  gap: 12px;
+}
+
+.profile-card h2 {
+  font-size: 1.1rem;
+  color: var(--text);
+}
+
+.profile-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px 20px;
+}
+
+.profile-grid-full {
+  grid-column: 1 / -1;
+}
+
+.profile-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.profile-label {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.profile-value {
+  color: var(--text);
+  word-break: break-word;
+  line-height: 1.4;
+}
+
+.profile-input,
+.profile-select,
+.profile-textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text);
+  outline: none;
+  font-family: inherit;
+  font-size: 0.95rem;
+}
+
+.profile-input:focus,
+.profile-select:focus,
+.profile-textarea:focus {
+  border-color: rgba(109, 40, 217, 0.65);
+}
+
+.profile-input:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.profile-textarea {
+  min-height: 84px;
+  resize: vertical;
+}
+
+.profile-row {
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 16px;
+  margin-bottom: 12px;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.profile-row-view {
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 12px;
+  margin-bottom: 12px;
+}
+
+.profile-row-view:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+  margin-bottom: 0;
+}
+
+.profile-row-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 12px;
+}
+
+.profile-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.profile-checkbox-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.profile-empty-text {
+  color: var(--muted);
+  font-style: italic;
+}
+
+.profile-muted {
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.profile-muted-inline {
+  color: var(--muted);
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: 0.78rem;
+  margin-left: 6px;
+}
+
+.profile-alert {
+  background: rgba(220, 38, 38, 0.15);
+  border: 1px solid rgba(220, 38, 38, 0.4);
+  color: #ffb4b4;
+  padding: 10px 12px;
+  border-radius: 10px;
+  margin-top: 10px;
+  font-size: 0.9rem;
+}
+
+.profile-add {
+  background: rgba(109, 40, 217, 0.12);
+  color: #d9c8ff;
+  border: 1px dashed rgba(109, 40, 217, 0.4);
+  padding: 10px 16px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 700;
+  width: 100%;
+  margin-bottom: 4px;
+}
+
+.profile-add:hover {
+  background: rgba(109, 40, 217, 0.2);
+}
+
+.btn-primary,
+.btn-outline {
+  padding: 10px 18px;
+  border-radius: 12px;
+  font-family: inherit;
+  font-size: 0.92rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--purple), #8b5cf6);
+  color: white;
+  border: none;
+}
+
+.btn-primary:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
+.btn-outline:hover {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.link-gold {
+  color: var(--gold);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+@media (max-width: 600px) {
+  .profile-grid {
+    grid-template-columns: 1fr;
+  }
+}
