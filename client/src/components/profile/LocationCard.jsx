@@ -20,7 +20,9 @@ function LocationCard({ profile, onSaved }) {
         try {
             await save({ locationCity: city, country, zipCode: zip });
             setEditing(false);
-        } catch {}
+        } catch (err) {
+            console.error("save failed", err);
+        }
     };
 
     const cancel = () => {
@@ -60,7 +62,7 @@ function LocationCard({ profile, onSaved }) {
                                 value={country}
                                 onChange={(e) => setCountry(e.target.value)}
                             >
-                                <option value="">— Select country —</option>
+                                <option value="">- Select country -</option>
                                 {COUNTRIES.map((c) => (
                                     <option key={c} value={c}>{c}</option>
                                 ))}
@@ -89,15 +91,15 @@ function LocationCard({ profile, onSaved }) {
                 <div className="profile-grid">
                     <div className="profile-field">
                         <div className="profile-label">City</div>
-                        <div className="profile-value">{profile?.locationCity || "—"}</div>
+                        <div className="profile-value">{profile?.locationCity || "-"}</div>
                     </div>
                     <div className="profile-field">
                         <div className="profile-label">Country / Region</div>
-                        <div className="profile-value">{profile?.country || "—"}</div>
+                        <div className="profile-value">{profile?.country || "-"}</div>
                     </div>
                     <div className="profile-field profile-grid-full">
                         <div className="profile-label">ZIP / Postal code</div>
-                        <div className="profile-value">{profile?.zipCode || "—"}</div>
+                        <div className="profile-value">{profile?.zipCode || "-"}</div>
                     </div>
                 </div>
             )}

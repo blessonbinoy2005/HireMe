@@ -13,7 +13,7 @@ const EMPTY_ROW = {
 };
 
 const TYPE_OPTIONS = [
-    { value: "", label: "—" },
+    { value: "", label: "-" },
     { value: "full-time", label: "Full-time" },
     { value: "part-time", label: "Part-time" },
     { value: "internship", label: "Internship" },
@@ -43,7 +43,9 @@ function ExperienceList({ experience, onSaved }) {
         try {
             await save({ experience: rows });
             setEditing(false);
-        } catch {}
+        } catch (err) {
+            console.error("save failed", err);
+        }
     };
 
     const cancel = () => {
@@ -176,7 +178,7 @@ function ExperienceList({ experience, onSaved }) {
                 experience.map((x, i) => (
                     <div key={i} className="profile-row-view">
                         <div className="profile-value">
-                            <strong>{x.title || "—"}</strong>
+                            <strong>{x.title || "-"}</strong>
                             {x.company && <span> · {x.company}</span>}
                         </div>
                         {(x.employmentType || x.location) && (
@@ -188,7 +190,7 @@ function ExperienceList({ experience, onSaved }) {
                         )}
                         {(x.startDate || x.endDate || x.current) && (
                             <div className="profile-muted">
-                                {x.startDate || "?"} — {x.current ? "Present" : (x.endDate || "?")}
+                                {x.startDate || "?"} - {x.current ? "Present" : (x.endDate || "?")}
                             </div>
                         )}
                         {x.description && (

@@ -17,7 +17,9 @@ function ContactCard({ profile, onSaved }) {
         try {
             await save({ phoneNumber: phone, resume });
             setEditing(false);
-        } catch {}
+        } catch (err) {
+            console.error("save failed", err);
+        }
     };
 
     const cancel = () => {
@@ -71,7 +73,7 @@ function ContactCard({ profile, onSaved }) {
                 <div className="profile-grid">
                     <div className="profile-field profile-grid-full">
                         <div className="profile-label">Phone number</div>
-                        <div className="profile-value">{profile?.phoneNumber || "—"}</div>
+                        <div className="profile-value">{profile?.phoneNumber || "-"}</div>
                     </div>
                     <div className="profile-field profile-grid-full">
                         <div className="profile-label">Resume</div>
@@ -81,7 +83,7 @@ function ContactCard({ profile, onSaved }) {
                                     {profile.resume}
                                 </a>
                             ) : (
-                                "—"
+                                "-"
                             )}
                         </div>
                     </div>

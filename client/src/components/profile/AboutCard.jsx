@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import useProfileSave from "../../hooks/useProfileSave";
 
 const STATUS_OPTIONS = [
-    { value: "", label: "—" },
+    { value: "", label: "-" },
     { value: "student", label: "Student" },
     { value: "new-grad", label: "New grad" },
     { value: "unemployed", label: "Unemployed" },
@@ -10,7 +10,7 @@ const STATUS_OPTIONS = [
 ];
 
 function statusLabel(value) {
-    return STATUS_OPTIONS.find((o) => o.value === value)?.label || "—";
+    return STATUS_OPTIONS.find((o) => o.value === value)?.label || "-";
 }
 
 function AboutCard({ profile, onSaved }) {
@@ -29,7 +29,9 @@ function AboutCard({ profile, onSaved }) {
         try {
             await save({ headline, currentStatus: status });
             setEditing(false);
-        } catch {}
+        } catch (err) {
+            console.error("save failed", err);
+        }
     };
 
     const cancel = () => {
@@ -86,7 +88,7 @@ function AboutCard({ profile, onSaved }) {
                 <div className="profile-grid">
                     <div className="profile-field profile-grid-full">
                         <div className="profile-label">Headline</div>
-                        <div className="profile-value">{profile?.headline || "—"}</div>
+                        <div className="profile-value">{profile?.headline || "-"}</div>
                     </div>
                     <div className="profile-field profile-grid-full">
                         <div className="profile-label">Current status</div>

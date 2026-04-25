@@ -28,7 +28,9 @@ function EducationList({ education, onSaved }) {
         try {
             await save({ education: rows });
             setEditing(false);
-        } catch {}
+        } catch (err) {
+            console.error("save failed", err);
+        }
     };
 
     const cancel = () => {
@@ -139,7 +141,7 @@ function EducationList({ education, onSaved }) {
             ) : education && education.length > 0 ? (
                 education.map((e, i) => (
                     <div key={i} className="profile-row-view">
-                        <div className="profile-value"><strong>{e.school || "—"}</strong></div>
+                        <div className="profile-value"><strong>{e.school || "-"}</strong></div>
                         {(e.degree || e.field) && (
                             <div className="profile-value">
                                 {e.degree}{e.degree && e.field ? ", " : ""}{e.field}
@@ -147,7 +149,7 @@ function EducationList({ education, onSaved }) {
                         )}
                         {(e.startDate || e.endDate || e.current) && (
                             <div className="profile-muted">
-                                {e.startDate || "?"} — {e.current ? "Present" : (e.endDate || "?")}
+                                {e.startDate || "?"} - {e.current ? "Present" : (e.endDate || "?")}
                             </div>
                         )}
                     </div>

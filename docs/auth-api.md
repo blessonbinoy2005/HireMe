@@ -43,7 +43,7 @@ expire after `JWT_EXPIRES_IN` (default `7d`). Missing or invalid tokens return
 ### `GET /`
 
 Health check. Returns the plain string `Backend is running` (not wrapped in the
-envelope — this route exists only to verify the server is up).
+envelope - this route exists only to verify the server is up).
 
 ---
 
@@ -61,7 +61,7 @@ Create a new account. The new user's `role` defaults to `job_seeker`.
 | `password`        | string | yes      | Minimum 8 characters.              |
 | `confirmPassword` | string | no       | If provided, must equal `password`.|
 
-**Success — `201 Created`**
+**Success - `201 Created`**
 
 ```json
 {
@@ -102,7 +102,7 @@ Exchange credentials for a JWT.
 | `email`    | string | yes      |
 | `password` | string | yes      |
 
-**Success — `200 OK`**
+**Success - `200 OK`**
 
 ```json
 {
@@ -134,7 +134,7 @@ Exchange credentials for a JWT.
 
 Return the authenticated user's profile. **Requires `Authorization` header.**
 
-**Success — `200 OK`**
+**Success - `200 OK`**
 
 ```json
 {
@@ -189,7 +189,7 @@ server/
 └── models/<Model>.js              # Mongoose schemas
 ```
 
-### 1. Route file — declares the URLs
+### 1. Route file - declares the URLs
 
 A route file only maps HTTP paths to controller functions and decides which
 middleware runs first. It contains no business logic.
@@ -214,7 +214,7 @@ It's then mounted in `server.js`:
 app.use("/api/auth", authRoutes);
 ```
 
-### 2. Controller — does the work and returns the envelope
+### 2. Controller - does the work and returns the envelope
 
 Controllers read `req`, talk to models, and respond using the envelope helpers.
 Every success uses `ok(data)`, every failure uses `fail(message)`:
@@ -238,10 +238,10 @@ Rules of thumb for controllers:
 - Validate inputs up front and return `400` with `fail(...)` on bad input.
 - Wrap the body in `try/catch` and return `500` with `fail("Server error …")`
   on unexpected errors.
-- Never return raw Mongoose documents — map through a `publicUser`-style
+- Never return raw Mongoose documents - map through a `publicUser`-style
   helper so fields like `passwordHash` never leak.
 
-### 3. Middleware — protecting a route with `verifyToken`
+### 3. Middleware - protecting a route with `verifyToken`
 
 Middleware is a function `(req, res, next) => …` that runs **before** a
 controller. Think of it like a Python decorator: drop it into the route
@@ -271,7 +271,7 @@ function verifyToken(req, res, next) {
 Follow these steps to add any protected endpoint. We'll use the existing
 `GET /api/auth/me` (show the signed-in user's profile) as the worked example.
 
-##### Step 1 — Write the controller (reads `req.userId`, never trusts client input)
+##### Step 1 - Write the controller (reads `req.userId`, never trusts client input)
 
 The handler assumes `verifyToken` has already run, so it reads the caller's
 id from `req.userId` rather than from the URL or body. It loads the user from
@@ -303,7 +303,7 @@ async function me(req, res) {
 module.exports = { /* ...others..., */ me };
 ```
 
-##### Step 2 — Import `verifyToken` in the route file
+##### Step 2 - Import `verifyToken` in the route file
 
 ```js
 // server/routes/authRoutes.js
@@ -311,10 +311,10 @@ const { verifyToken } = require("../middleware/authMiddleware");
 const { me } = require("../controllers/authController");
 ```
 
-##### Step 3 — Put `verifyToken` **between the path and the handler**
+##### Step 3 - Put `verifyToken` **between the path and the handler**
 
 Order matters. `verifyToken` must appear before the controller in the
-argument list — Express runs middleware left to right.
+argument list - Express runs middleware left to right.
 
 ```js
 router.post("/register", register);         // public
@@ -322,11 +322,11 @@ router.post("/login",    login);            // public
 router.get("/me",        verifyToken, me);  // protected
 ```
 
-That's it on the server — any route declared this way now requires a valid
+That's it on the server - any route declared this way now requires a valid
 JWT. The middleware handles the `401`s automatically; the controller only
 runs for authenticated callers.
 
-##### Step 4 — Call it from the frontend with the `Authorization` header
+##### Step 4 - Call it from the frontend with the `Authorization` header
 
 ```js
 const token = localStorage.getItem("token");
@@ -338,7 +338,7 @@ const res = await axios.get(`${API_BASE}/api/auth/me`, {
 const { user } = res.data.data;   // { id, firstName, lastName, email, role }
 ```
 
-##### Step 5 — Handle the `401` case
+##### Step 5 - Handle the `401` case
 
 If the token is missing, expired, or tampered with, the server responds:
 
@@ -351,21 +351,21 @@ user back to `/login`.
 
 #### Rules of thumb for every protected route
 
-- **Derive the user from the token, not from client input** — use
+- **Derive the user from the token, not from client input** - use
   `req.userId`, never a body/query parameter, or any logged-in user could
   read someone else's data.
-- **Look up fresh data every call** — the JWT carries an id, but the database
+- **Look up fresh data every call** - the JWT carries an id, but the database
   is the source of truth.
-- **Never return the raw Mongoose document** — route it through a helper like
+- **Never return the raw Mongoose document** - route it through a helper like
   `publicUser` so `passwordHash` and other internals stay server-side.
 
-### 4. Adding a new feature — the checklist
+### 4. Adding a new feature - the checklist
 
-1. `models/<Model>.js` — define the Mongoose schema.
-2. `controllers/<feature>Controller.js` — implement handlers using `ok` /
+1. `models/<Model>.js` - define the Mongoose schema.
+2. `controllers/<feature>Controller.js` - implement handlers using `ok` /
    `fail`, read `req.userId` when auth is required.
-3. `routes/<feature>Routes.js` — map URLs to handlers, add `verifyToken` (and
+3. `routes/<feature>Routes.js` - map URLs to handlers, add `verifyToken` (and
    any role check) where appropriate.
-4. `server.js` — `app.use("/api/<feature>", <feature>Routes)`.
+4. `server.js` - `app.use("/api/<feature>", <feature>Routes)`.
 5. Document the new endpoints in `docs/` following the same sections used
    above (request body, success example, error table).
