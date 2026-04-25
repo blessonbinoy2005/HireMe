@@ -213,6 +213,63 @@
   .apply-link:hover {
     background: #6d28d9;
   }
+  /* ===== MAP POPUP JOB CARD ===== */
+.map-job-card {
+  width: 230px;
+  color: #111;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.map-job-card h3 {
+  margin: 0 0 6px;
+  font-size: 17px;
+  color: #111;
+}
+
+.map-company {
+  font-weight: bold;
+  margin: 4px 0;
+  color: #333;
+}
+
+.map-location {
+  margin: 4px 0;
+  color: #555;
+}
+
+.map-salary {
+  margin: 8px 0;
+  font-weight: bold;
+  color: #6d28d9;
+}
+
+.map-description {
+  margin: 8px 0;
+  line-height: 1.4;
+  color: #444;
+}
+
+.map-tag {
+  display: inline-block;
+  background: #eee7ff;
+  color: #5b21b6;
+  padding: 5px 9px;
+  border-radius: 12px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.map-apply-btn {
+  display: block;
+  text-align: center;
+  margin-top: 10px;
+  background: #7c3aed;
+  color: white;
+  padding: 8px 12px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: bold;
+}
   
   /* ===== EMPTY ===== */
   .no-jobs {
