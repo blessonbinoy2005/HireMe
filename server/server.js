@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 
 const connectDB = require("./config/db");
 const authRoutes = require("./routes/authRoutes");
+const profileRoutes = require("./routes/profileRoutes");
 
 const app = express();
 
@@ -19,6 +20,7 @@ app.get("/", (req, res) => {
 
 // Feature routes (API logic lives in controllers/*)
 app.use("/api/auth", authRoutes);
+app.use("/api/profile", profileRoutes);
 
 // Start server after DB connects
 const PORT = process.env.PORT || 9000;
