@@ -1,5 +1,5 @@
-import React from "react";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import React, { useEffect } from "react";
+import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import L from "leaflet";
 
 // Fix default Leaflet marker icons
@@ -14,13 +14,30 @@ L.Icon.Default.mergeOptions({
     "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png",
 });
 
-function JobMap({ jobs }) {
+// Moves map when a job card is clicked
+function FlyToJob({ job }) {
+  const map = useMap();
+
+  useEffect(() => {
+    if (job && job.latitude && job.longitude) {
+      map.flyTo([job.latitude, job.longitude], 13, {
+        duration: 1.5,
+      });
+    }
+  }, [job, map]);
+
+  return null;
+}
+
+function JobMap({ jobs, selectedJob }) {
   return (
     <MapContainer
       center={[42.6526, -73.7562]}
       zoom={11}
       style={{ height: "100%", width: "100%" }}
     >
+      <FlyToJob job={selectedJob} />
+
       <TileLayer
         attribution='&copy; OpenStreetMap contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
