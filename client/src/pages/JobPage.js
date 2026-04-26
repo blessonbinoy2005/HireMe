@@ -17,6 +17,7 @@ function JobsPage() {
   const [selectedJob, setSelectedJob] = useState(null);
 
   const [jobs, setJobs] = useState([]);
+  const [savedJobIds, setSavedJobIds] = useState([]);
 
   const fetchJobs = () => {
     axios
@@ -38,12 +39,52 @@ function JobsPage() {
       });
   };
 
+  const fetchSavedApplications = () => {
+    axios
+      .get("http://localhost:9000/api/applications")
+      .then((res) => {
+        const ids = res.data.map((app) => app.jobId);
+        setSavedJobIds(ids);
+      })
+      .catch((err) => {
+        console.log("Error fetching saved applications:", err);
+      });
+  };
+
   useEffect(() => {
     fetchJobs();
+    fetchSavedApplications();
   }, [jobType, salary, distance, remote, moreFilter]);
 
   const handleSearch = () => {
     fetchJobs();
+  };
+
+  const handleSaveJob = async (job, e) => {
+    e.stopPropagation();
+
+    try {
+      const jobToSave = {
+        jobId: job._id,
+        role: job.jobTitle,
+        company: job.companyName,
+        location: job.address,
+        status: "Saved",
+        notes: "",
+        applicationLink: job.applicationLink,
+      };
+
+      const res = await axios.post(
+        "http://localhost:9000/api/applications",
+        jobToSave
+      );
+
+      setSavedJobIds([...savedJobIds, job._id]);
+      alert("Job saved to tracker!");
+    } catch (error) {
+      console.error(error);
+      alert("Job is already saved or failed to save.");
+    }
   };
 
   return (
@@ -51,7 +92,6 @@ function JobsPage() {
       <Navbar />
 
       <div className="jobs-page">
-        {/* FILTER BAR */}
         <div className="jobs-filter-bar">
           <div className="jobs-search-input">
             <span>🔍</span>
@@ -127,15 +167,16 @@ function JobsPage() {
           </button>
         </div>
 
-        {/* MAIN CONTENT */}
         <div className="jobs-content">
-          
-          {/* MAP SECTION */}
-          <div className="map-placeholder"> 
-             <JobMap jobs={jobs} selectedJob={selectedJob} />
+          <div className="map-placeholder">
+            <JobMap
+              jobs={jobs}
+              selectedJob={selectedJob}
+              savedJobIds={savedJobIds}
+              onSaveJob={handleSaveJob}
+            />
           </div>
 
-          {/* JOB LIST */}
           <div className="jobs-list-section">
             <div className="jobs-list-header">
               <h1>Job Results</h1>
@@ -151,7 +192,7 @@ function JobsPage() {
                     className="job-card"
                     key={job._id}
                     onClick={() => setSelectedJob(job)}
-                      >
+                  >
                     <div className="job-card-top">
                       <div>
                         <h2>{job.jobTitle}</h2>
@@ -175,14 +216,29 @@ function JobsPage() {
                         {job.employmentType && <span>{job.employmentType}</span>}
                       </div>
 
-                      <a
-                        href={job.applicationLink}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="apply-link"
-                      >
-                        Apply
-                      </a>
+                      <div className="job-actions">
+                        <button
+                          className={
+                            savedJobIds.includes(job._id)
+                              ? "save-job-btn saved"
+                              : "save-job-btn"
+                          }
+                          onClick={(e) => handleSaveJob(job, e)}
+                          disabled={savedJobIds.includes(job._id)}
+                        >
+                          {savedJobIds.includes(job._id) ? "Saved" : "Save"}
+                        </button>
+
+                        <a
+                          href={job.applicationLink}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="apply-link"
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          Apply
+                        </a>
+                      </div>
                     </div>
                   </div>
                 ))
