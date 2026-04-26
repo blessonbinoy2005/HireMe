@@ -1,0 +1,252 @@
+.company-page {
+    min-height: 100vh;
+    background: #0f0f1a;
+    color: white;
+    padding: 32px;
+  }
+  
+  .company-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+  }
+  
+  .company-header h1 {
+    font-size: 36px;
+    margin-bottom: 6px;
+  }
+  
+  .company-header p {
+    color: #b8b8c8;
+  }
+  
+  .company-header span {
+    background: #24134a;
+    border: 1px solid #4c1d95;
+    color: #d8c4ff;
+    border-radius: 999px;
+    padding: 10px 18px;
+    font-weight: bold;
+  }
+  
+  .company-info-card {
+    background: #171727;
+    border: 1px solid #2b2b3e;
+    border-radius: 20px;
+    padding: 22px;
+    margin-bottom: 24px;
+  }
+  
+  .company-info-card h2 {
+    font-size: 26px;
+    margin-bottom: 14px;
+  }
+  
+  .company-info-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  
+  .company-info-grid p {
+    color: #c2c2d3;
+  }
+  
+  .company-info-grid strong {
+    color: white;
+  }
+  
+  .company-info-grid a {
+    color: #c4b5fd;
+    text-decoration: none;
+  }
+  
+  .company-info-grid a:hover {
+    text-decoration: underline;
+  }
+  
+  .company-layout {
+    display: grid;
+    grid-template-columns: 380px 1fr;
+    gap: 24px;
+    align-items: start;
+  }
+  
+  .job-form-card {
+    background: #171727;
+    border: 1px solid #2b2b3e;
+    border-radius: 20px;
+    padding: 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    position: sticky;
+    top: 24px;
+  }
+  
+  .job-form-card h2 {
+    margin-bottom: 6px;
+  }
+  
+  .job-form-card input,
+  .job-form-card textarea,
+  .job-form-card select {
+    width: 100%;
+    box-sizing: border-box;
+    background: #10101c;
+    color: white;
+    border: 1px solid #34344a;
+    border-radius: 12px;
+    padding: 12px 14px;
+    font-size: 14px;
+    outline: none;
+  }
+  
+  .job-form-card input:focus,
+  .job-form-card textarea:focus,
+  .job-form-card select:focus {
+    border-color: #7c3aed;
+  }
+  
+  .job-form-card textarea {
+    min-height: 120px;
+    resize: vertical;
+  }
+  
+  .job-form-card select {
+    cursor: pointer;
+  }
+  
+  .two-inputs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  
+  .two-inputs input {
+    min-width: 0;
+  }
+  
+  .form-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 6px;
+  }
+  
+  .form-buttons button {
+    flex: 1;
+    background: #7c3aed;
+    border: none;
+    color: white;
+    padding: 12px;
+    border-radius: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+  }
+  
+  .form-buttons button:hover {
+    background: #6d28d9;
+  }
+  
+  .cancel-btn {
+    background: #292938 !important;
+  }
+  
+  .cancel-btn:hover {
+    background: #3a3a4d !important;
+  }
+  
+  .company-jobs-list {
+    background: #12121f;
+    border: 1px solid #252538;
+    border-radius: 20px;
+    padding: 22px;
+  }
+  
+  .company-jobs-list h2 {
+    margin-bottom: 10px;
+  }
+  
+  .company-job-card {
+    background: #171727;
+    border: 1px solid #2b2b3e;
+    border-radius: 18px;
+    padding: 20px;
+    margin-top: 16px;
+    transition: 0.2s;
+  }
+  
+  .company-job-card:hover {
+    border-color: #7c3aed;
+  }
+  
+  .company-job-card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+  }
+  
+  .company-job-card h3 {
+    font-size: 22px;
+    margin-bottom: 8px;
+  }
+  
+  .company-job-card p {
+    color: #c2c2d3;
+    line-height: 1.4;
+  }
+  
+  .company-job-card-top button {
+    background: #7c3aed;
+    border: none;
+    color: white;
+    padding: 10px 16px;
+    border-radius: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+  }
+  
+  .company-job-card-top button:hover {
+    background: #6d28d9;
+  }
+  
+  .company-job-info {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 16px;
+  }
+  
+  .company-job-info span {
+    background: #292938;
+    border: 1px solid #3a3a4d;
+    border-radius: 999px;
+    padding: 6px 12px;
+    font-weight: bold;
+    color: #e7e7f3;
+  }
+  
+  .empty-text {
+    color: #b8b8c8;
+    margin-top: 12px;
+  }
+  
+  @media (max-width: 900px) {
+    .company-layout {
+      grid-template-columns: 1fr;
+    }
+  
+    .job-form-card {
+      position: static;
+    }
+  
+    .company-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 14px;
+    }
+  }

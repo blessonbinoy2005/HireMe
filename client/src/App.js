@@ -29,7 +29,8 @@ function App() {
 
           <Route path="/jobs" element={<JobsPage />} />
           <Route path="/jobs" element={<JobsPage />} />
-          <Route path="/company" element={<CompanyPage />} />
+          {/* <Route path="/company" element={<CompanyPage />} /> */}
+          <Route path="/company/:companyID" element={<CompanyPage />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>
