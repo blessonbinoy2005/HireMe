@@ -14,6 +14,7 @@ function JobsPage() {
   const [distance, setDistance] = useState("");
   const [remote, setRemote] = useState("");
   const [moreFilter, setMoreFilter] = useState("");
+  const [selectedJob, setSelectedJob] = useState(null);
 
   const [jobs, setJobs] = useState([]);
 
@@ -130,8 +131,8 @@ function JobsPage() {
         <div className="jobs-content">
           
           {/* MAP SECTION */}
-          <div className="map-placeholder">
-            <JobMap jobs={jobs} />
+          <div className="map-placeholder"> 
+             <JobMap jobs={jobs} selectedJob={selectedJob} />
           </div>
 
           {/* JOB LIST */}
@@ -146,7 +147,11 @@ function JobsPage() {
                 <p className="no-jobs">No jobs found.</p>
               ) : (
                 jobs.map((job) => (
-                  <div className="job-card" key={job._id}>
+                  <div
+                    className="job-card"
+                    key={job._id}
+                    onClick={() => setSelectedJob(job)}
+                      >
                     <div className="job-card-top">
                       <div>
                         <h2>{job.jobTitle}</h2>
