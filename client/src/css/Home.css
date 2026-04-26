@@ -1,0 +1,71 @@
+/* ===== HOME CONTAINER ===== */
+.home-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  background: #0f0f1a;
+  color: white;
+}
+
+.home-title {
+  font-size: 42px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.home-subtitle {
+  font-size: 18px;
+  color: #b8b8c8;
+  text-align: center;
+}
+
+/*  SEARCH BAR  */
+.search-bar {
+  display: flex;
+  width: 600px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 40px;
+  padding: 10px;
+  backdrop-filter: blur(10px);
+}
+
+.search-bar input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: white;
+  padding: 10px;
+  font-size: 16px;
+}
+
+.search-bar button {
+  background: #facc15;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 30px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.search-bar button:hover {
+  background: #eab308;
+}
+
+/* MAP BUTTON */
+.map-chip {
+  background: #7c3aed;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 999px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.map-chip:hover {
+  background: #6d28d9;
+}
