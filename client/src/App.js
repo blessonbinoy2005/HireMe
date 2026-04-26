@@ -7,6 +7,7 @@ import Signup from "./pages/Signup";
 import JobsPage from "./pages/JobPage";
 import Profile from "./pages/Profile";
 import CompanyPage from "./pages/company_page";
+import ApplicationTracker from "./pages/ApplicationTracker";
 
 
 function App() {
@@ -29,7 +30,10 @@ function App() {
 
           <Route path="/jobs" element={<JobsPage />} />
           <Route path="/jobs" element={<JobsPage />} />
-          <Route path="/company" element={<CompanyPage />} />
+          {/* <Route path="/company" element={<CompanyPage />} /> */}
+          <Route path="/company/:companyID" element={<CompanyPage />} />
+
+          <Route path="/tracker" element={<ApplicationTracker />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>

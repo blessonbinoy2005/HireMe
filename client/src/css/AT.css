@@ -1,135 +1,176 @@
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #0b0b14;
-    color: #f5f7fb;
-    margin: 0;
-    padding: 20px;
-    line-height: 1.6;
-}
-
-header {
-    background: linear-gradient(135deg, #1d1d34 0%, #121221 100%);
-    padding: 30px 20px;
-    border-bottom: 2px solid #4c1d95;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-    margin-bottom: 40px;
-    text-align: center;
-    border-radius: 20px;
-}
-
-header h1 {
-    margin: 0;
-    font-size: 2.2rem;
-    font-weight: 800;
-    letter-spacing: 1px;
-    color: #eeb211;
-    text-transform: uppercase;
-}
-
-/* Container for both rows */
-.dashboard {
-    display: flex;
-    flex-direction: column;
-    gap: 30px; /* Space between the two rows */
-    width: 98%;
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 10px;
-}
-
-/* Row Styling */
-.apply-status, .result-status {
-    display: flex;
-    gap: 20px;
-    width: 100%;
-}
-
-/* Top row: 3 columns */
-.apply-status .status-column {
-    flex: 1; /* Equal width for the 3 columns */
-}
-
-/* Bottom row: 2 columns */
-.result-status .status-column {
-    flex: 1; /* Equal width for the 2 columns */
-}
-
-.status-column {
-    background-color: rgba(18, 18, 33, 0.8);
-    border-radius: 15px;
-    padding: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    transition: transform 0.2s ease;
-}
-
-.status-column:hover {
-    border-color: #6d28d9;
-}
-
-.status-column h3 {
-    text-align: center;
-    color: #f5f7fb;
-    border-bottom: 3px solid #6d28d9;
-    padding-bottom: 12px;
-    margin-top: 0;
-    margin-bottom: 20px;
-    font-size: 1.4rem;
-}
-
-.job-card {
-    background-color: #1d1d34;
-    padding: 18px;
-    border-radius: 12px;
-    margin-bottom: 15px;
-    border-left: 4px solid #eeb211; /* Accents the card */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-}
-
-.card-header h4 {
-    margin: 0;
-    color: #eeb211;
-    font-size: 1.1rem;
-}
-
-.company-tag {
-    display: block;
-    font-size: 0.85em;
-    color: #b7bdd1;
-    margin-bottom: 10px;
-}
-
-.notes-text {
-    background: rgba(0, 0, 0, 0.2);
-    padding: 8px;
-    border-radius: 6px;
-    font-size: 0.85em;
-    font-style: italic;
-    color: #cbd5e1;
-    margin: 10px 0;
-}
-
-.card-actions {
-    margin-top: 15px;
-    display: flex;
-    gap: 10px;
-}
-
-select, button {
-    background: #4c1d95;
+/* ===== PAGE ===== */
+.tracker-page {
+    min-height: calc(100vh - 70px);
+    background: #0f0f1a;
     color: white;
-    border: none;
-    padding: 8px 12px;
-    border-radius: 6px;
+    padding: 28px;
+  }
+  
+  .tracker-page h1 {
+    font-size: 38px;
+    margin-bottom: 24px;
+    font-weight: 800;
+  }
+  
+  /* ===== BOARD ===== */
+  .tracker-board {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(230px, 1fr));
+    gap: 20px;
+    align-items: stretch;
+  }
+  
+  /* ===== COLUMN ===== */
+  .status-column {
+    background: #12121f;
+    border: 1px solid #29293d;
+    border-radius: 22px;
+    padding: 18px;
+    min-height: 520px;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.25);
+    transition: 0.2s ease;
+  }
+  
+  .status-column:hover {
+    border-color: #7c3aed;
+    transform: translateY(-2px);
+  }
+  
+  .status-column h3 {
+    margin: 0 0 16px;
+    padding-bottom: 14px;
+    border-bottom: 3px solid #7c3aed;
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+  }
+  
+  /* ===== EMPTY TEXT ===== */
+  .empty-column-text {
+    color: #b7bdd1;
+    font-size: 14px;
+    text-align: center;
+    margin-top: 26px;
+  }
+  
+  /* ===== CARD ===== */
+  .tracker-job-card {
+    background: linear-gradient(135deg, #22223a 0%, #1a1a2f 100%);
+    border: 1px solid #34344a;
+    border-left: 5px solid #eeb211;
+    border-radius: 18px;
+    padding: 16px;
+    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.35);
+    transition: 0.2s ease;
+    overflow: hidden;
+  }
+  
+  .tracker-job-card:hover {
+    border-color: #7c3aed;
+    transform: translateY(-2px);
+  }
+  
+  /* ===== CARD HEADER ===== */
+  .tracker-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  
+  .tracker-card-header h4 {
+    font-size: 16px;
+    font-weight: 800;
+    margin: 0 0 4px;
+    line-height: 1.2;
+  }
+  
+  .tracker-card-header span {
+    font-size: 13px;
+    color: #b7bdd1;
+  }
+  
+  /* ===== DELETE BUTTON ===== */
+  .tracker-card-header button {
+    background: #292938;
+    border: 1px solid #3a3a4d;
+    width: 26px;
+    height: 26px;
+    border-radius: 999px;
+    color: white;
     cursor: pointer;
-    font-size: 0.85rem;
-    transition: background 0.2s;
-}
-
-select:hover, button:hover {
-    background: #6d28d9;
-}
-
-select {
-    flex-grow: 1;
-}
+  }
+  
+  .tracker-card-header button:hover {
+    background: #ef4444;
+  }
+  
+  /* ===== BODY ===== */
+  .tracker-job-card p {
+    font-size: 13px;
+    margin: 8px 0;
+    color: #d1d1e0;
+  }
+  
+  .notes-text {
+    background: #12121f;
+    border: 1px solid #29293d;
+    padding: 8px;
+    border-radius: 10px;
+    font-size: 13px;
+    margin-top: 10px;
+  }
+  
+  /* ===== ACTIONS (FIXED LAYOUT) ===== */
+  .tracker-card-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-top: 12px;
+  }
+  
+  .tracker-card-actions select {
+    grid-column: 1 / 3;
+    width: 100%;
+    background: #5b21b6;
+    border: none;
+    padding: 8px;
+    border-radius: 10px;
+    color: white;
+    font-weight: bold;
+    font-size: 13px;
+  }
+  
+  .tracker-card-actions button,
+  .tracker-card-actions a {
+    width: 100%;
+    background: #5b21b6;
+    border: none;
+    padding: 8px;
+    border-radius: 10px;
+    color: white;
+    font-weight: bold;
+    font-size: 13px;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  
+  .tracker-card-actions button:hover,
+  .tracker-card-actions a:hover,
+  .tracker-card-actions select:hover {
+    background: #7c3aed;
+  }
+  
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 1400px) {
+    .tracker-board {
+      grid-template-columns: repeat(3, minmax(240px, 1fr));
+    }
+  }
+  
+  @media (max-width: 950px) {
+    .tracker-board {
+      grid-template-columns: 1fr;
+    }
+  }

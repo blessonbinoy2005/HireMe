@@ -30,9 +30,8 @@ function Navbar() {
         <nav className="navbar">
             <div className="nav-left">
                 <Link className="nav-link" to="/">Jobs</Link>
-                <a className="nav-link" href="#results">Map</a>
-                <a className="nav-link" href="#">Saved</a>
-                <a className="nav-link" href="#">Tracker</a>
+                <Link className="nav-link" to="/jobs">Map</Link>
+                <Link className="nav-link" to="/tracker">Tracker</Link>
             </div>
 
             <div className="nav-center">

@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import L from "leaflet";
 
-// Fix default Leaflet marker icons
 delete L.Icon.Default.prototype._getIconUrl;
 
 L.Icon.Default.mergeOptions({
@@ -14,7 +13,6 @@ L.Icon.Default.mergeOptions({
     "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png",
 });
 
-// Moves map when a job card is clicked
 function FlyToJob({ job }) {
   const map = useMap();
 
@@ -29,7 +27,7 @@ function FlyToJob({ job }) {
   return null;
 }
 
-function JobMap({ jobs, selectedJob }) {
+function JobMap({ jobs, selectedJob, savedJobIds, onSaveJob }) {
   return (
     <MapContainer
       center={[42.6526, -73.7562]}
@@ -66,14 +64,28 @@ function JobMap({ jobs, selectedJob }) {
                   <span className="map-tag">{job.employmentType}</span>
                 )}
 
-                <a
-                  href={job.applicationLink}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="map-apply-btn"
-                >
-                  Apply
-                </a>
+                <div className="map-popup-actions">
+                  <button
+                    className={
+                      savedJobIds.includes(job._id)
+                        ? "map-save-btn saved"
+                        : "map-save-btn"
+                    }
+                    onClick={(e) => onSaveJob(job, e)}
+                    disabled={savedJobIds.includes(job._id)}
+                  >
+                    {savedJobIds.includes(job._id) ? "Saved" : "Save"}
+                  </button>
+
+                  <a
+                    href={job.applicationLink}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="map-apply-btn"
+                  >
+                    Apply
+                  </a>
+                </div>
               </div>
             </Popup>
           </Marker>
