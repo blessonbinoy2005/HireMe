@@ -1,0 +1,135 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #0b0b14;
+    color: #f5f7fb;
+    margin: 0;
+    padding: 20px;
+    line-height: 1.6;
+}
+
+header {
+    background: linear-gradient(135deg, #1d1d34 0%, #121221 100%);
+    padding: 30px 20px;
+    border-bottom: 2px solid #4c1d95;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    margin-bottom: 40px;
+    text-align: center;
+    border-radius: 20px;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2.2rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+    color: #eeb211;
+    text-transform: uppercase;
+}
+
+/* Container for both rows */
+.dashboard {
+    display: flex;
+    flex-direction: column;
+    gap: 30px; /* Space between the two rows */
+    width: 98%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 10px;
+}
+
+/* Row Styling */
+.apply-status, .result-status {
+    display: flex;
+    gap: 20px;
+    width: 100%;
+}
+
+/* Top row: 3 columns */
+.apply-status .status-column {
+    flex: 1; /* Equal width for the 3 columns */
+}
+
+/* Bottom row: 2 columns */
+.result-status .status-column {
+    flex: 1; /* Equal width for the 2 columns */
+}
+
+.status-column {
+    background-color: rgba(18, 18, 33, 0.8);
+    border-radius: 15px;
+    padding: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease;
+}
+
+.status-column:hover {
+    border-color: #6d28d9;
+}
+
+.status-column h3 {
+    text-align: center;
+    color: #f5f7fb;
+    border-bottom: 3px solid #6d28d9;
+    padding-bottom: 12px;
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 1.4rem;
+}
+
+.job-card {
+    background-color: #1d1d34;
+    padding: 18px;
+    border-radius: 12px;
+    margin-bottom: 15px;
+    border-left: 4px solid #eeb211; /* Accents the card */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.card-header h4 {
+    margin: 0;
+    color: #eeb211;
+    font-size: 1.1rem;
+}
+
+.company-tag {
+    display: block;
+    font-size: 0.85em;
+    color: #b7bdd1;
+    margin-bottom: 10px;
+}
+
+.notes-text {
+    background: rgba(0, 0, 0, 0.2);
+    padding: 8px;
+    border-radius: 6px;
+    font-size: 0.85em;
+    font-style: italic;
+    color: #cbd5e1;
+    margin: 10px 0;
+}
+
+.card-actions {
+    margin-top: 15px;
+    display: flex;
+    gap: 10px;
+}
+
+select, button {
+    background: #4c1d95;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: background 0.2s;
+}
+
+select:hover, button:hover {
+    background: #6d28d9;
+}
+
+select {
+    flex-grow: 1;
+}

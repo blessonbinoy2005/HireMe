@@ -106,4 +106,63 @@ connectDB()
         }
       });
 
-    
+    // GET: Fetch all jobs for the Tracker Dashboard 
+app.get('/api/applications', async (req, res) => {
+    try {
+        // Note: userId would typically come from authentication middleware
+        const applications = await Application.find({ userId: req.user.id });
+        res.json(applications);
+    } catch (err) {
+        res.status(500).json({ message: "Error fetching tracker data" });
+    }
+});
+
+// POST: Save/Bookmark a new job [cite: 35, 39]
+app.post('/api/applications', async (req, res) => {
+    const newApp = new Application({
+        ...req.body,
+        userId: req.user.id
+    });
+    try {
+        const saved = await newApp.save();
+        res.status(201).json(saved);
+    } catch (err) {
+        res.status(400).json({ message: "Error saving job" });
+    }
+});
+
+
+// APPLICATION TRACKER //
+
+// PATCH: Update application status or specific notes [cite: 35, 44]
+app.patch('/api/applications/:id', async (req, res) => {
+    try {
+        const updatedApp = await Application.findByIdAndUpdate(
+            req.params.id,
+            { status: req.body.status, notes: req.body.notes },
+            { new: true }
+        );
+        res.json(updatedApp);
+    } catch (err) {
+        res.status(400).json({ message: "Error updating application" });
+    }
+});
+async function handleSaveJob(jobFromApi) {
+    const jobToSave = {
+        role: jobFromApi.title,
+        company: jobFromApi.company,
+        location: jobFromApi.location,
+        status: 'Saved', // Default status
+        applicationLink: jobFromApi.url
+    };
+
+    const response = await fetch('/api/applications', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(jobToSave)
+    });
+
+    if (response.ok) {
+        alert("Job bookmarked to your tracker!");
+    }
+}

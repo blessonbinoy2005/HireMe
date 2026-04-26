@@ -16,6 +16,7 @@ const ApplicationTrackerSchema = new mongoose.Schema({
     enum: ["saved", "applied", "interview", "offer", "rejected", "withdrawn"],
     default: "saved",
   },
+
   flagCreatedDate: {
     type: Date,
     default: Date.now,
@@ -28,6 +29,10 @@ const ApplicationTrackerSchema = new mongoose.Schema({
     type: String,
     trim: true,
   },
+
+  // additional schema info
+  notes: { type: String, default: "" },
+  applicationLink: String
 });
 
 module.exports = mongoose.model("ApplicationTracker", ApplicationTrackerSchema);
