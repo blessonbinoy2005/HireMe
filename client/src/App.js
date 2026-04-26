@@ -6,6 +6,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import JobsPage from "./pages/JobPage";
 import Profile from "./pages/Profile";
+import CompanyPage from "./pages/company_page";
 
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
 
           <Route path="/jobs" element={<JobsPage />} />
           <Route path="/jobs" element={<JobsPage />} />
+          <Route path="/company" element={<CompanyPage />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>

@@ -7,6 +7,8 @@ const connectDB = require("./config/db");
 const authRoutes = require("./routes/authRoutes");
 const profileRoutes = require("./routes/profileRoutes");
 
+const companyJobRoutes = require("./router/jobroutes");
+
 //db imports
 const Job = require("./models/Job");
 
@@ -24,6 +26,7 @@ app.get("/", (req, res) => {
 // Feature routes (API logic lives in controllers/*)
 app.use("/api/auth", authRoutes);
 app.use("/api/profile", profileRoutes);
+app.use("/api/jobs", companyJobRoutes);
 
 // Start server after DB connects
 const PORT = process.env.PORT || 9000;
