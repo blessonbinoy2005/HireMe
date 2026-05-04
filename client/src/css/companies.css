@@ -1,39 +1,47 @@
 .companies-page {
-  max-width: 880px;
-  margin: 32px auto;
-  padding: 0 20px;
-  color: inherit;
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 40px 24px 80px;
 }
 
 .companies-empty-page {
-  max-width: 480px;
+  max-width: 520px;
   margin: 80px auto;
   text-align: center;
+  padding: 0 24px;
+}
+
+.companies-empty-page h1 {
+  font-size: 1.6rem;
+  margin-bottom: 10px;
 }
 
 .companies-header {
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
   gap: 16px;
-  margin-bottom: 20px;
 }
 
 .companies-header h1 {
+  font-size: 2rem;
   margin: 0;
 }
 
 .companies-card {
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 14px;
-  padding: 20px;
+  background: rgba(23, 23, 42, 0.7);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 22px 24px;
   margin-bottom: 16px;
+  box-shadow: var(--shadow);
 }
 
 .companies-card h2 {
-  margin: 0 0 8px;
-  font-size: 1.05rem;
+  font-size: 1.1rem;
+  color: var(--text);
+  margin: 0 0 14px;
 }
 
 .companies-list {
@@ -48,21 +56,22 @@
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 14px;
-  padding: 14px 18px;
+  background: rgba(23, 23, 42, 0.7);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 18px 22px;
   text-align: left;
   color: inherit;
   cursor: pointer;
   font-family: inherit;
   font-size: inherit;
+  box-shadow: var(--shadow);
   transition: background 0.15s ease, border-color 0.15s ease;
 }
 
 .companies-row:hover {
-  background: rgba(255, 255, 255, 0.07);
-  border-color: rgba(255, 255, 255, 0.18);
+  background: rgba(23, 23, 42, 0.85);
+  border-color: rgba(109, 40, 217, 0.4);
 }
 
 .companies-row-main {
@@ -73,8 +82,9 @@
 }
 
 .companies-row-name {
-  font-weight: 600;
+  font-weight: 700;
   font-size: 1.05rem;
+  color: var(--text);
 }
 
 .companies-row-meta {
@@ -86,15 +96,16 @@
   text-transform: uppercase;
   letter-spacing: 0.04em;
   font-size: 0.72rem;
+  font-weight: 700;
   padding: 4px 10px;
   border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.18);
+  border: 1px solid var(--border);
   color: var(--muted);
 }
 
 .companies-role-badge.role-owner {
   border-color: rgba(212, 175, 55, 0.5);
-  color: #d4af37;
+  color: var(--gold);
 }
 
 .companies-role-badge.role-admin {
@@ -103,14 +114,14 @@
 }
 
 .companies-role-badge.role-recruiter {
-  border-color: rgba(255, 255, 255, 0.18);
+  border-color: var(--border);
   color: var(--muted);
 }
 
 .companies-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 16px;
+  gap: 14px 20px;
 }
 
 .companies-field {
@@ -124,33 +135,35 @@
 }
 
 .companies-label {
+  font-size: 0.78rem;
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  font-size: 0.78rem;
   color: var(--muted);
+  font-weight: 700;
 }
 
 .companies-input,
 .companies-select,
 .companies-textarea {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  color: inherit;
-  border-radius: 10px;
-  padding: 10px 12px;
-  font-size: 0.95rem;
-  font-family: inherit;
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text);
   outline: none;
+  font-family: inherit;
+  font-size: 0.95rem;
 }
 
 .companies-input:focus,
 .companies-select:focus,
 .companies-textarea:focus {
-  border-color: rgba(212, 175, 55, 0.6);
+  border-color: rgba(109, 40, 217, 0.65);
 }
 
 .companies-textarea {
-  min-height: 90px;
+  min-height: 84px;
   resize: vertical;
 }
 
@@ -190,4 +203,10 @@
   border-radius: 10px;
   margin-top: 10px;
   font-size: 0.9rem;
+}
+
+@media (max-width: 600px) {
+  .companies-grid {
+    grid-template-columns: 1fr;
+  }
 }

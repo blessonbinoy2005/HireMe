@@ -12,7 +12,14 @@ function SkillsList({ skills, onSaved }) {
     const addSkill = () => {
         const trimmed = draft.trim();
         if (!trimmed) return;
-        if (items.some((s) => s.toLowerCase() === trimmed.toLowerCase())) {
+        let exists = false;
+        for (let i = 0; i < items.length; i++) {
+            if (items[i].toLowerCase() === trimmed.toLowerCase()) {
+                exists = true;
+                break;
+            }
+        }
+        if (exists) {
             setDraft("");
             return;
         }
@@ -20,7 +27,13 @@ function SkillsList({ skills, onSaved }) {
         setDraft("");
     };
 
-    const removeSkill = (i) => setItems(items.filter((_, j) => j !== i));
+    const removeSkill = (i) => {
+        const next = [];
+        for (let j = 0; j < items.length; j++) {
+            if (j !== i) next.push(items[j]);
+        }
+        setItems(next);
+    };
 
     const onKeyDown = (e) => {
         if (e.key === "Enter") {

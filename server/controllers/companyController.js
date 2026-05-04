@@ -27,10 +27,15 @@ async function createCompany(req, res) {
 
         const trimmedName = companyName.trim();
 
-        const existing = await CompanyMember.find({ user: req.userId }).populate("company");
-        const duplicate = existing.find(
-            (m) => m.company && m.company.companyName.toLowerCase() === trimmedName.toLowerCase()
-        );
+        const memberships = await CompanyMember.find({ user: req.userId }).populate("company");
+        let duplicate = null;
+        for (let i = 0; i < memberships.length; i++) {
+            const m = memberships[i];
+            if (m.company && m.company.companyName.toLowerCase() === trimmedName.toLowerCase()) {
+                duplicate = m.company;
+                break;
+            }
+        }
         if (duplicate) {
             return res.status(400).json(fail(`You already have a company named "${trimmedName}".`));
         }
@@ -64,13 +69,16 @@ async function getMyCompanies(req, res) {
         const memberships = await CompanyMember.find({ user: req.userId })
             .populate("company")
             .sort({ joinedAt: -1 });
-        const data = memberships
-            .filter((m) => m.company)
-            .map((m) => ({
+        const data = [];
+        for (let i = 0; i < memberships.length; i++) {
+            const m = memberships[i];
+            if (!m.company) continue;
+            data.push({
                 role: m.role,
                 joinedAt: m.joinedAt,
                 company: m.company,
-            }));
+            });
+        }
         return res.json(ok({ memberships: data }));
     } catch (err) {
         console.error("getMyCompanies error:", err);
