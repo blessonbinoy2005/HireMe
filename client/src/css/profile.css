@@ -154,6 +154,33 @@
   font-style: italic;
 }
 
+.profile-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: inherit;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.profile-chip-remove {
+  background: transparent;
+  border: none;
+  color: var(--muted);
+  cursor: pointer;
+  padding: 0;
+  font-size: 1.05rem;
+  line-height: 1;
+}
+
+.profile-chip-remove:hover {
+  color: inherit;
+}
+
 .profile-muted {
   color: var(--muted);
   font-size: 0.9rem;

@@ -40,6 +40,22 @@ function cleanExperience(arr) {
         }));
 }
 
+function cleanSkills(arr) {
+    if (!Array.isArray(arr)) return undefined;
+    const seen = new Set();
+    const out = [];
+    for (const raw of arr) {
+        if (typeof raw !== "string") continue;
+        const trimmed = raw.trim();
+        if (!trimmed) continue;
+        const key = trimmed.toLowerCase();
+        if (seen.has(key)) continue;
+        seen.add(key);
+        out.push(trimmed);
+    }
+    return out;
+}
+
 async function getProfile(req, res) {
     try {
         const profile = await JobSeekerProfile.findOne({ userId: req.userId });
@@ -64,6 +80,10 @@ async function upsertProfile(req, res) {
         if (req.body.experience !== undefined) {
             const cleaned = cleanExperience(req.body.experience);
             if (cleaned) update.experience = cleaned;
+        }
+        if (req.body.skills !== undefined) {
+            const cleaned = cleanSkills(req.body.skills);
+            if (cleaned) update.skills = cleaned;
         }
 
         const profile = await JobSeekerProfile.findOneAndUpdate(

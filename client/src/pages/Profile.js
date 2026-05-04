@@ -7,6 +7,7 @@ import LocationCard from "../components/profile/LocationCard";
 import ContactCard from "../components/profile/ContactCard";
 import EducationList from "../components/profile/EducationList";
 import ExperienceList from "../components/profile/ExperienceList";
+import SkillsList from "../components/profile/SkillsList";
 import "../css/profile.css";
 
 const API_BASE = process.env.REACT_APP_API_BASE || "http://localhost:9000";
@@ -78,6 +79,7 @@ function Profile() {
             <ContactCard profile={profile} onSaved={handleSaved} />
             <EducationList education={profile?.education || []} onSaved={handleSaved} />
             <ExperienceList experience={profile?.experience || []} onSaved={handleSaved} />
+            <SkillsList skills={profile?.skills || []} onSaved={handleSaved} />
         </div>
     );
 }

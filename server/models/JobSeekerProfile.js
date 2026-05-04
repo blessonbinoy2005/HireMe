@@ -44,6 +44,7 @@ const JobSeekerProfileSchema = new mongoose.Schema({
   resume: { type: String, default: "", trim: true },
   education: { type: [educationSchema], default: [] },
   experience: { type: [experienceSchema], default: [] },
+  skills: { type: [String], default: [] },
 });
 
 module.exports = mongoose.model("JobSeekerProfile", JobSeekerProfileSchema);
