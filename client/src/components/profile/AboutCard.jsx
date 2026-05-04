@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import useProfileSave from "./useProfileSave";
+import { useAuth } from "../../context/AuthContext";
 
 const STATUS_OPTIONS = [
     { value: "", label: "-" },
@@ -14,10 +15,13 @@ function statusLabel(value) {
 }
 
 function AboutCard({ profile, onSaved }) {
+    const { user } = useAuth();
     const [editing, setEditing] = useState(false);
     const [headline, setHeadline] = useState(profile?.headline || "");
     const [status, setStatus] = useState(profile?.currentStatus || "");
     const { save, saving, error } = useProfileSave(onSaved);
+
+    const fullName = user ? `${user.firstName} ${user.lastName}` : "-";
 
     useEffect(() => {
         setHeadline(profile?.headline || "");
@@ -53,6 +57,10 @@ function AboutCard({ profile, onSaved }) {
                 <form onSubmit={onSubmit}>
                     <div className="profile-grid">
                         <div className="profile-field profile-grid-full">
+                            <div className="profile-label">Name</div>
+                            <div className="profile-value">{fullName}</div>
+                        </div>
+                        <div className="profile-field profile-grid-full">
                             <label className="profile-label" htmlFor="headline">Headline</label>
                             <input
                                 id="headline"
@@ -86,6 +94,10 @@ function AboutCard({ profile, onSaved }) {
                 </form>
             ) : (
                 <div className="profile-grid">
+                    <div className="profile-field profile-grid-full">
+                        <div className="profile-label">Name</div>
+                        <div className="profile-value">{fullName}</div>
+                    </div>
                     <div className="profile-field profile-grid-full">
                         <div className="profile-label">Headline</div>
                         <div className="profile-value">{profile?.headline || "-"}</div>

@@ -54,26 +54,6 @@ function Profile() {
 
             {loadError && <div className="profile-alert">{loadError}</div>}
 
-            <section className="profile-card">
-                <header className="profile-card-header">
-                    <h2>Account</h2>
-                </header>
-                <div className="profile-grid">
-                    <div className="profile-field">
-                        <div className="profile-label">Name</div>
-                        <div className="profile-value">{user.firstName} {user.lastName}</div>
-                    </div>
-                    <div className="profile-field">
-                        <div className="profile-label">Email</div>
-                        <div className="profile-value">{user.email}</div>
-                    </div>
-                    <div className="profile-field">
-                        <div className="profile-label">Role</div>
-                        <div className="profile-value">{user.role}</div>
-                    </div>
-                </div>
-            </section>
-
             <AboutCard profile={profile} onSaved={handleSaved} />
             <LocationCard profile={profile} onSaved={handleSaved} />
             <ContactCard profile={profile} onSaved={handleSaved} />
