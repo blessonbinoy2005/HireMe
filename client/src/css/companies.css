@@ -1,0 +1,193 @@
+.companies-page {
+  max-width: 880px;
+  margin: 32px auto;
+  padding: 0 20px;
+  color: inherit;
+}
+
+.companies-empty-page {
+  max-width: 480px;
+  margin: 80px auto;
+  text-align: center;
+}
+
+.companies-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.companies-header h1 {
+  margin: 0;
+}
+
+.companies-card {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  padding: 20px;
+  margin-bottom: 16px;
+}
+
+.companies-card h2 {
+  margin: 0 0 8px;
+  font-size: 1.05rem;
+}
+
+.companies-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.companies-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  padding: 14px 18px;
+  text-align: left;
+  color: inherit;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: inherit;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.companies-row:hover {
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(255, 255, 255, 0.18);
+}
+
+.companies-row-main {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+
+.companies-row-name {
+  font-weight: 600;
+  font-size: 1.05rem;
+}
+
+.companies-row-meta {
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+.companies-role-badge {
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: 0.72rem;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: var(--muted);
+}
+
+.companies-role-badge.role-owner {
+  border-color: rgba(212, 175, 55, 0.5);
+  color: #d4af37;
+}
+
+.companies-role-badge.role-admin {
+  border-color: rgba(120, 180, 240, 0.5);
+  color: #78b4f0;
+}
+
+.companies-role-badge.role-recruiter {
+  border-color: rgba(255, 255, 255, 0.18);
+  color: var(--muted);
+}
+
+.companies-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.companies-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.companies-field-full {
+  grid-column: 1 / -1;
+}
+
+.companies-label {
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+.companies-input,
+.companies-select,
+.companies-textarea {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: inherit;
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  outline: none;
+}
+
+.companies-input:focus,
+.companies-select:focus,
+.companies-textarea:focus {
+  border-color: rgba(212, 175, 55, 0.6);
+}
+
+.companies-textarea {
+  min-height: 90px;
+  resize: vertical;
+}
+
+.companies-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.companies-invite-form {
+  display: flex;
+  gap: 10px;
+  margin: 8px 0;
+}
+
+.companies-invite-form .companies-input {
+  flex: 1;
+}
+
+.companies-muted {
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.companies-empty-text {
+  color: var(--muted);
+  font-style: italic;
+  margin-bottom: 6px;
+}
+
+.companies-alert {
+  background: rgba(220, 38, 38, 0.15);
+  border: 1px solid rgba(220, 38, 38, 0.4);
+  color: #ffb4b4;
+  padding: 10px 12px;
+  border-radius: 10px;
+  margin-top: 10px;
+  font-size: 0.9rem;
+}

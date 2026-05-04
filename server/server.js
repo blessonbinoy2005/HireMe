@@ -6,6 +6,7 @@ const mongoose = require("mongoose");
 const connectDB = require("./config/db");
 const authRoutes = require("./routes/authRoutes");
 const profileRoutes = require("./routes/profileRoutes");
+const companyRoutes = require("./routes/companyRoutes");
 
 const companyJobRoutes = require("./router/jobroutes");
 const ApplicationTracker = require("./models/ApplicationTracker");
@@ -26,6 +27,7 @@ app.get("/", (req, res) => {
 // Feature routes (API logic lives in controllers/*)
 app.use("/api/auth", authRoutes);
 app.use("/api/profile", profileRoutes);
+app.use("/api/companies", companyRoutes);
 app.use("/api/jobs", companyJobRoutes);
 
 // Start server after DB connects

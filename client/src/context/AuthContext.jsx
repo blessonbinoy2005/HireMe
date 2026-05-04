@@ -7,6 +7,7 @@ export function AuthProvider({ children }) {
         const raw = localStorage.getItem("user");
         return raw ? JSON.parse(raw) : null;
     });
+    const [membershipsVersion, setMembershipsVersion] = useState(0);
 
     const login = (token, nextUser) => {
         localStorage.setItem("token", token);
@@ -20,8 +21,12 @@ export function AuthProvider({ children }) {
         setUser(null);
     };
 
+    const refreshMemberships = () => setMembershipsVersion((v) => v + 1);
+
     return (
-        <AuthContext.Provider value={{ user, login, logout }}>
+        <AuthContext.Provider
+            value={{ user, login, logout, membershipsVersion, refreshMemberships }}
+        >
             {children}
         </AuthContext.Provider>
     );
