@@ -27,13 +27,18 @@ function Navbar() {
             setMemberships([]);
             return;
         }
-        const token = localStorage.getItem("token");
-        axios
-            .get(`${API_BASE}/api/companies/mine`, {
-                headers: { Authorization: `Bearer ${token}` },
-            })
-            .then((res) => setMemberships(res.data.data.memberships || []))
-            .catch(() => setMemberships([]));
+        async function load() {
+            try {
+                const token = localStorage.getItem("token");
+                const res = await axios.get(`${API_BASE}/api/companies/mine`, {
+                    headers: { Authorization: `Bearer ${token}` },
+                });
+                setMemberships(res.data.data.memberships || []);
+            } catch {
+                setMemberships([]);
+            }
+        }
+        load();
     }, [user, membershipsVersion]);
 
     const handleLogout = () => {

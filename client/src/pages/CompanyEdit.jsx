@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { useAuth } from "../context/AuthContext";
 import "../css/companies.css";
@@ -15,9 +15,11 @@ const SIZE_OPTIONS = [
     { value: "1000+", label: "1000+" },
 ];
 
-function CompanySetup() {
+function CompanyEdit() {
     const { user, refreshMemberships } = useAuth();
     const navigate = useNavigate();
+    const { companyID } = useParams();
+
     const [companyName, setCompanyName] = useState("");
     const [description, setDescription] = useState("");
     const [industry, setIndustry] = useState("");
@@ -25,18 +27,51 @@ function CompanySetup() {
     const [companyLocation, setCompanyLocation] = useState("");
     const [logoUrl, setLogoUrl] = useState("");
     const [size, setSize] = useState("");
+    const [loading, setLoading] = useState(true);
     const [submitting, setSubmitting] = useState(false);
     const [error, setError] = useState("");
+
+    useEffect(() => {
+        if (!user) {
+            setLoading(false);
+            return;
+        }
+        async function load() {
+            try {
+                const token = localStorage.getItem("token");
+                const res = await axios.get(`${API_BASE}/api/companies/${companyID}`, {
+                    headers: { Authorization: `Bearer ${token}` },
+                });
+                const c = res.data.data.company;
+                setCompanyName(c.companyName || "");
+                setDescription(c.description || "");
+                setIndustry(c.industry || "");
+                setCompanyWebsite(c.companyWebsite || "");
+                setCompanyLocation(c.companyLocation || "");
+                setLogoUrl(c.logoUrl || "");
+                setSize(c.size || "");
+            } catch (err) {
+                setError(err.response?.data?.error?.message || "Failed to load company.");
+            } finally {
+                setLoading(false);
+            }
+        }
+        load();
+    }, [user, companyID]);
 
     if (!user) {
         return (
             <div className="companies-empty-page">
                 <h1>You're not signed in.</h1>
                 <p>
-                    <Link to="/login" className="link-gold">Log in</Link> to create a company.
+                    <Link to="/login" className="link-gold">Log in</Link> to edit a company.
                 </p>
             </div>
         );
+    }
+
+    if (loading) {
+        return <div className="companies-empty-page"><p>Loading…</p></div>;
     }
 
     const onSubmit = async (e) => {
@@ -49,8 +84,8 @@ function CompanySetup() {
         setSubmitting(true);
         try {
             const token = localStorage.getItem("token");
-            const res = await axios.post(
-                `${API_BASE}/api/companies`,
+            await axios.put(
+                `${API_BASE}/api/companies/${companyID}`,
                 {
                     companyName,
                     description,
@@ -62,11 +97,10 @@ function CompanySetup() {
                 },
                 { headers: { Authorization: `Bearer ${token}` } }
             );
-            const company = res.data.data.company;
             refreshMemberships();
-            navigate(`/company/${company._id}`);
+            navigate(`/company/${companyID}`);
         } catch (err) {
-            setError(err.response?.data?.error?.message || "Failed to create company.");
+            setError(err.response?.data?.error?.message || "Failed to save changes.");
         } finally {
             setSubmitting(false);
         }
@@ -75,7 +109,7 @@ function CompanySetup() {
     return (
         <div className="companies-page">
             <header className="companies-header">
-                <h1>Create a company</h1>
+                <h1>Edit company</h1>
             </header>
 
             <section className="companies-card">
@@ -90,7 +124,6 @@ function CompanySetup() {
                                 className="companies-input"
                                 value={companyName}
                                 onChange={(e) => setCompanyName(e.target.value)}
-                                placeholder="Acme Inc."
                                 required
                             />
                         </div>
@@ -104,7 +137,6 @@ function CompanySetup() {
                                 className="companies-textarea"
                                 value={description}
                                 onChange={(e) => setDescription(e.target.value)}
-                                placeholder="What does your company do?"
                             />
                         </div>
 
@@ -115,7 +147,6 @@ function CompanySetup() {
                                 className="companies-input"
                                 value={industry}
                                 onChange={(e) => setIndustry(e.target.value)}
-                                placeholder="e.g. Technology"
                             />
                         </div>
 
@@ -142,7 +173,6 @@ function CompanySetup() {
                                 className="companies-input"
                                 value={companyWebsite}
                                 onChange={(e) => setCompanyWebsite(e.target.value)}
-                                placeholder="https://"
                             />
                         </div>
 
@@ -155,7 +185,6 @@ function CompanySetup() {
                                 className="companies-input"
                                 value={companyLocation}
                                 onChange={(e) => setCompanyLocation(e.target.value)}
-                                placeholder="Albany, NY"
                             />
                         </div>
 
@@ -166,7 +195,6 @@ function CompanySetup() {
                                 className="companies-input"
                                 value={logoUrl}
                                 onChange={(e) => setLogoUrl(e.target.value)}
-                                placeholder="https://"
                             />
                         </div>
                     </div>
@@ -174,17 +202,13 @@ function CompanySetup() {
                     {error && <div className="companies-alert">{error}</div>}
 
                     <div className="companies-actions">
-                        <button
-                            type="submit"
-                            className="btn-primary"
-                            disabled={submitting}
-                        >
-                            {submitting ? "Creating…" : "Create company"}
+                        <button type="submit" className="btn-primary" disabled={submitting}>
+                            {submitting ? "Saving…" : "Save changes"}
                         </button>
                         <button
                             type="button"
                             className="btn-outline"
-                            onClick={() => navigate("/companies")}
+                            onClick={() => navigate(`/company/${companyID}`)}
                             disabled={submitting}
                         >
                             Cancel
@@ -196,4 +220,4 @@ function CompanySetup() {
     );
 }
 
-export default CompanySetup;
+export default CompanyEdit;

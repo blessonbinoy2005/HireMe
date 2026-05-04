@@ -9,6 +9,7 @@ import Profile from "./pages/Profile";
 import CompanyPage from "./pages/company_page";
 import Companies from "./pages/Companies";
 import CompanySetup from "./pages/CompanySetup";
+import CompanyEdit from "./pages/CompanyEdit";
 import ApplicationTracker from "./pages/ApplicationTracker";
 
 
@@ -24,6 +25,7 @@ function App() {
             <Route path="/companies" element={<Companies />} />
             <Route path="/companies/new" element={<CompanySetup />} />
             <Route path="/company/:companyID" element={<CompanyPage />} />
+            <Route path="/company/:companyID/edit" element={<CompanyEdit />} />
           </Route>
 
           {/* Routes without Navbar */}

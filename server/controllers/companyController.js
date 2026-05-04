@@ -54,7 +54,7 @@ async function createCompany(req, res) {
         await CompanyMember.create({
             user: req.userId,
             company: company._id,
-            role: "owner",
+            role: "admin",
         });
 
         return res.status(201).json(ok({ company }));
@@ -88,7 +88,7 @@ async function getMyCompanies(req, res) {
 
 async function getCompany(req, res) {
     try {
-        const company = await Company.findById(req.params.id);
+        const company = await Company.findById(req.params.companyId);
         if (!company) {
             return res.status(404).json(fail("Company not found."));
         }
@@ -99,4 +99,55 @@ async function getCompany(req, res) {
     }
 }
 
-module.exports = { createCompany, getMyCompanies, getCompany };
+async function updateCompany(req, res) {
+    try {
+        const { companyName, companyLocation, companyWebsite, description, industry, logoUrl, size } = req.body || {};
+
+        const update = {};
+        if (companyName !== undefined) {
+            const trimmed = companyName.trim();
+            if (!trimmed) {
+                return res.status(400).json(fail("Company name is required."));
+            }
+            update.companyName = trimmed;
+        }
+        if (companyLocation !== undefined) update.companyLocation = companyLocation.trim();
+        if (companyWebsite !== undefined) update.companyWebsite = companyWebsite.trim();
+        if (description !== undefined) update.description = description.trim();
+        if (industry !== undefined) update.industry = industry.trim();
+        if (logoUrl !== undefined) update.logoUrl = logoUrl.trim();
+        if (size !== undefined) update.size = size;
+
+        if (update.companyName) {
+            const memberships = await CompanyMember.find({ user: req.userId }).populate("company");
+            let duplicate = null;
+            for (let i = 0; i < memberships.length; i++) {
+                const m = memberships[i];
+                if (!m.company) continue;
+                if (m.company._id.toString() === req.params.companyId) continue;
+                if (m.company.companyName.toLowerCase() === update.companyName.toLowerCase()) {
+                    duplicate = m.company;
+                    break;
+                }
+            }
+            if (duplicate) {
+                return res.status(400).json(fail(`You already have a company named "${update.companyName}".`));
+            }
+        }
+
+        const company = await Company.findByIdAndUpdate(
+            req.params.companyId,
+            update,
+            { new: true, runValidators: true }
+        );
+        if (!company) {
+            return res.status(404).json(fail("Company not found."));
+        }
+        return res.json(ok({ company }));
+    } catch (err) {
+        console.error("updateCompany error:", err);
+        return res.status(500).json(fail("Server error updating company."));
+    }
+}
+
+module.exports = { createCompany, getMyCompanies, getCompany, updateCompany };

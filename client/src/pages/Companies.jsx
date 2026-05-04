@@ -19,16 +19,20 @@ function Companies() {
             setLoading(false);
             return;
         }
-        const token = localStorage.getItem("token");
-        axios
-            .get(`${API_BASE}/api/companies/mine`, {
-                headers: { Authorization: `Bearer ${token}` },
-            })
-            .then((res) => setMemberships(res.data.data.memberships || []))
-            .catch((err) =>
-                setError(err.response?.data?.error?.message || "Failed to load companies.")
-            )
-            .finally(() => setLoading(false));
+        async function load() {
+            try {
+                const token = localStorage.getItem("token");
+                const res = await axios.get(`${API_BASE}/api/companies/mine`, {
+                    headers: { Authorization: `Bearer ${token}` },
+                });
+                setMemberships(res.data.data.memberships || []);
+            } catch (err) {
+                setError(err.response?.data?.error?.message || "Failed to load companies.");
+            } finally {
+                setLoading(false);
+            }
+        }
+        load();
     }, [user]);
 
     const onRedeem = (e) => {

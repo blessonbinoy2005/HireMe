@@ -13,7 +13,7 @@ const CompanyMemberSchema = new mongoose.Schema({
     },
     role: {
         type: String,
-        enum: ["owner", "admin", "recruiter"],
+        enum: ["admin", "recruiter"],
         default: "recruiter",
         required: true,
     },

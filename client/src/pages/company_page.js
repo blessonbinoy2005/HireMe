@@ -1,10 +1,11 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import "../css/CompanyPage.css";
 
 function CompanyPage() {
   const { companyID } = useParams();
+  const navigate = useNavigate();
 
   const [company, setCompany] = useState(null);
   const [jobs, setJobs] = useState([]);
@@ -109,7 +110,12 @@ function CompanyPage() {
       </div>
 
       <div className="company-info-card">
-        <h2>{company ? company.companyName : "Loading company..."}</h2>
+        <div className="company-card-header">
+          <h2>{company ? company.companyName : "Loading company..."}</h2>
+          <button onClick={() => navigate(`/company/${companyID}/edit`)}>
+            Edit
+          </button>
+        </div>
 
         <div className="company-info-grid">
           <p>

@@ -103,14 +103,9 @@
   color: var(--muted);
 }
 
-.companies-role-badge.role-owner {
+.companies-role-badge.role-admin {
   border-color: rgba(212, 175, 55, 0.5);
   color: var(--gold);
-}
-
-.companies-role-badge.role-admin {
-  border-color: rgba(120, 180, 240, 0.5);
-  color: #78b4f0;
 }
 
 .companies-role-badge.role-recruiter {
