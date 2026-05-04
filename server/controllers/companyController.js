@@ -9,28 +9,6 @@ function fail(message) {
     return { success: false, error: { message } };
 }
 
-function toSlug(s) {
-    return (s || "")
-        .toLowerCase()
-        .trim()
-        .replace(/[^a-z0-9]+/g, "-")
-        .replace(/^-+|-+$/g, "");
-}
-
-async function uniqueSlug(base) {
-    if (!base) return base;
-    let slug = base;
-    let n = 2;
-    while (await Company.findOne({ slug })) {
-        slug = `${base}-${n++}`;
-        if (n > 100) {
-            slug = `${base}-${Date.now()}`;
-            break;
-        }
-    }
-    return slug;
-}
-
 async function createCompany(req, res) {
     try {
         const {
@@ -47,18 +25,24 @@ async function createCompany(req, res) {
             return res.status(400).json(fail("Company name is required."));
         }
 
-        const baseSlug = toSlug(companyName);
-        const slug = await uniqueSlug(baseSlug);
+        const trimmedName = companyName.trim();
+
+        const existing = await CompanyMember.find({ user: req.userId }).populate("company");
+        const duplicate = existing.find(
+            (m) => m.company && m.company.companyName.toLowerCase() === trimmedName.toLowerCase()
+        );
+        if (duplicate) {
+            return res.status(400).json(fail(`You already have a company named "${trimmedName}".`));
+        }
 
         const company = await Company.create({
-            companyName: companyName.trim(),
+            companyName: trimmedName,
             companyLocation: (companyLocation || "").trim(),
             companyWebsite: (companyWebsite || "").trim(),
             description: (description || "").trim(),
             industry: (industry || "").trim(),
             logoUrl: (logoUrl || "").trim(),
             size: size || "",
-            slug,
             createdBy: req.userId,
         });
 

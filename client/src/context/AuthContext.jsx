@@ -21,7 +21,7 @@ export function AuthProvider({ children }) {
         setUser(null);
     };
 
-    const refreshMemberships = () => setMembershipsVersion((v) => v + 1);
+    const refreshMemberships = () => setMembershipsVersion(membershipsVersion + 1);
 
     return (
         <AuthContext.Provider

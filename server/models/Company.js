@@ -14,13 +14,6 @@ const CompanySchema = new mongoose.Schema({
     type: String,
     trim: true,
   },
-  slug: {
-    type: String,
-    trim: true,
-    lowercase: true,
-    unique: true,
-    sparse: true,
-  },
   description: {
     type: String,
     trim: true,
@@ -45,6 +38,6 @@ const CompanySchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
   },
-}, { timestamps: true });
+});
 
 module.exports = mongoose.model("Company", CompanySchema);
