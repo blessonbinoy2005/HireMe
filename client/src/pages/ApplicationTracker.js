@@ -11,29 +11,41 @@ function ApplicationTracker() {
   }, []);
 
   const fetchApplications = async () => {
-    const res = await axios.get("http://localhost:9000/api/applications");
+    const token = localStorage.getItem("token");
+    const res = await axios.get("http://localhost:9000/api/applications", {
+      headers: { Authorization: `Bearer ${token}` },
+    });
     setApplications(res.data);
   };
 
   const updateStatus = async (id, newStatus) => {
-    await axios.patch(`http://localhost:9000/api/applications/${id}`, {
-      applicationStatus: newStatus,
-    });
+    const token = localStorage.getItem("token");
+    await axios.patch(
+      `http://localhost:9000/api/applications/${id}`,
+      { applicationStatus: newStatus },
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
     fetchApplications();
   };
 
   const editNotes = async (id, current) => {
     const newNote = prompt("Edit notes:", current || "");
     if (newNote !== null) {
-      await axios.patch(`http://localhost:9000/api/applications/${id}`, {
-        notes: newNote,
-      });
+      const token = localStorage.getItem("token");
+      await axios.patch(
+        `http://localhost:9000/api/applications/${id}`,
+        { notes: newNote },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
       fetchApplications();
     }
   };
 
   const removeApp = async (id) => {
-    await axios.delete(`http://localhost:9000/api/applications/${id}`);
+    const token = localStorage.getItem("token");
+    await axios.delete(`http://localhost:9000/api/applications/${id}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
     fetchApplications();
   };
 

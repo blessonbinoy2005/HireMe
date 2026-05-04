@@ -74,9 +74,11 @@ function JobsPage() {
         applicationLink: job.applicationLink,
       };
 
+      const token = localStorage.getItem("token");
       const res = await axios.post(
         "http://localhost:9000/api/applications",
-        jobToSave
+        jobToSave,
+        { headers: { Authorization: `Bearer ${token}` } }
       );
 
       setSavedJobIds([...savedJobIds, job._id]);

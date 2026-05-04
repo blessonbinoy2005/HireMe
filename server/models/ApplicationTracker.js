@@ -43,7 +43,7 @@ const ApplicationTrackerSchema = new mongoose.Schema({
   userId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
-    required: false, // TEMP (until auth is wired)
+    required: true,
   },
 
   jobId: {
@@ -69,6 +69,12 @@ const ApplicationTrackerSchema = new mongoose.Schema({
   },
 
   notes: {
+    type: String,
+    default: "",
+    trim: true,
+  },
+
+  recruiterNotes: {
     type: String,
     default: "",
     trim: true,

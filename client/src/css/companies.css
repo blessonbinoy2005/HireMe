@@ -113,6 +113,137 @@
   color: var(--muted);
 }
 
+.companies-role-badge.applicant-status-applied {
+  border-color: rgba(120, 180, 240, 0.5);
+  color: #78b4f0;
+}
+
+.companies-role-badge.applicant-status-interview {
+  border-color: rgba(245, 158, 11, 0.5);
+  color: #f59e0b;
+}
+
+.companies-role-badge.applicant-status-offer {
+  border-color: rgba(74, 222, 128, 0.5);
+  color: #4ade80;
+}
+
+.companies-role-badge.applicant-status-rejected {
+  border-color: rgba(248, 113, 113, 0.5);
+  color: #f87171;
+}
+
+.companies-role-badge.applicant-status-withdrawn {
+  border-color: var(--border);
+  color: var(--muted);
+}
+
+.applicant-status-select {
+  padding: 5px 28px 5px 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border);
+  color: inherit;
+  font-size: 0.74rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-family: inherit;
+  cursor: pointer;
+  outline: none;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: linear-gradient(45deg, transparent 50%, currentColor 50%),
+                    linear-gradient(135deg, currentColor 50%, transparent 50%);
+  background-position: calc(100% - 14px) center, calc(100% - 9px) center;
+  background-size: 5px 5px, 5px 5px;
+  background-repeat: no-repeat;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.applicant-status-select:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+.applicant-status-select:focus {
+  border-color: rgba(109, 40, 217, 0.65);
+}
+
+.applicant-status-select.applicant-status-applied {
+  border-color: rgba(120, 180, 240, 0.5);
+  color: #78b4f0;
+}
+
+.applicant-status-select.applicant-status-interview {
+  border-color: rgba(245, 158, 11, 0.5);
+  color: #f59e0b;
+}
+
+.applicant-status-select.applicant-status-offer {
+  border-color: rgba(74, 222, 128, 0.5);
+  color: #4ade80;
+}
+
+.applicant-status-select.applicant-status-rejected {
+  border-color: rgba(248, 113, 113, 0.5);
+  color: #f87171;
+}
+
+.applicant-status-select option {
+  background: #171727;
+  color: var(--text);
+  font-weight: 600;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.applicant-row {
+  gap: 12px;
+}
+
+.applicant-row-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  width: 100%;
+}
+
+.applicant-row-actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.applicant-notes-toggle {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  padding: 5px 12px;
+  border-radius: 999px;
+  font-size: 0.74rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.applicant-notes-toggle:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text);
+  border-color: rgba(109, 40, 217, 0.4);
+}
+
+.applicant-notes-panel {
+  border-top: 1px solid var(--border);
+  padding-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
 .companies-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);

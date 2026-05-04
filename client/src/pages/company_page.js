@@ -265,7 +265,16 @@ function CompanyPage() {
                     <p>{job.jobDescription}</p>
                   </div>
 
-                  <button onClick={() => handleEdit(job)}>Edit</button>
+                  <div style={{ display: "flex", gap: "8px" }}>
+                    <button
+                      onClick={() =>
+                        navigate(`/company/${companyID}/jobs/${job._id}/applicants`)
+                      }
+                    >
+                      View Applicants
+                    </button>
+                    <button onClick={() => handleEdit(job)}>Edit</button>
+                  </div>
                 </div>
 
                 <div className="company-job-info">

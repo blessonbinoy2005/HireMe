@@ -10,6 +10,8 @@ import CompanyPage from "./pages/company_page";
 import Companies from "./pages/Companies";
 import CompanySetup from "./pages/CompanySetup";
 import CompanyEdit from "./pages/CompanyEdit";
+import CompanyApplicants from "./pages/CompanyApplicants";
+import ApplicantProfile from "./pages/ApplicantProfile";
 import ApplicationTracker from "./pages/ApplicationTracker";
 
 
@@ -26,6 +28,8 @@ function App() {
             <Route path="/companies/new" element={<CompanySetup />} />
             <Route path="/company/:companyID" element={<CompanyPage />} />
             <Route path="/company/:companyID/edit" element={<CompanyEdit />} />
+            <Route path="/company/:companyID/jobs/:jobId/applicants" element={<CompanyApplicants />} />
+            <Route path="/applicants/:userId" element={<ApplicantProfile />} />
           </Route>
 
           {/* Routes without Navbar */}

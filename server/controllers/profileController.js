@@ -1,4 +1,5 @@
 const JobSeekerProfile = require("../models/JobSeekerProfile");
+const User = require("../models/User");
 
 function ok(data) {
     return { success: true, data };
@@ -66,6 +67,21 @@ async function getProfile(req, res) {
     }
 }
 
+async function getProfileByUserId(req, res) {
+    try {
+        const { userId } = req.params;
+        const user = await User.findById(userId).select("firstName lastName email role");
+        if (!user) {
+            return res.status(404).json(fail("User not found."));
+        }
+        const profile = await JobSeekerProfile.findOne({ userId });
+        return res.json(ok({ user, profile }));
+    } catch (err) {
+        console.error("getProfileByUserId error:", err);
+        return res.status(500).json(fail("Server error loading profile."));
+    }
+}
+
 async function upsertProfile(req, res) {
     try {
         const update = {};
@@ -99,4 +115,4 @@ async function upsertProfile(req, res) {
     }
 }
 
-module.exports = { getProfile, upsertProfile };
+module.exports = { getProfile, getProfileByUserId, upsertProfile };
