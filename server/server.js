@@ -6,9 +6,12 @@ const mongoose = require("mongoose");
 const connectDB = require("./config/db");
 const authRoutes = require("./routes/authRoutes");
 const profileRoutes = require("./routes/profileRoutes");
+const companyRoutes = require("./routes/companyRoutes");
+const applicantRoutes = require("./routes/applicantRoutes");
 
 const companyJobRoutes = require("./router/jobroutes");
 const ApplicationTracker = require("./models/ApplicationTracker");
+const { verifyToken } = require("./middleware/authMiddleware");
 //db imports
 const Job = require("./models/Job");
 
@@ -26,6 +29,8 @@ app.get("/", (req, res) => {
 // Feature routes (API logic lives in controllers/*)
 app.use("/api/auth", authRoutes);
 app.use("/api/profile", profileRoutes);
+app.use("/api/companies", companyRoutes);
+app.use("/api/jobs", applicantRoutes);
 app.use("/api/jobs", companyJobRoutes);
 
 // Start server after DB connects
@@ -169,9 +174,9 @@ app.get("/jobs", async (req, res) => {
 //     }
 // }
 // GET ALL APPLICATIONS
-app.get("/api/applications", async (req, res) => {
+app.get("/api/applications", verifyToken, async (req, res) => {
   try {
-    const apps = await ApplicationTracker.find()
+    const apps = await ApplicationTracker.find({ userId: req.userId })
       .populate("jobId")
       .sort({ flagCreatedDate: -1 });
 
@@ -182,11 +187,11 @@ app.get("/api/applications", async (req, res) => {
 });
 
 // SAVE JOB
-app.post("/api/applications", async (req, res) => {
+app.post("/api/applications", verifyToken, async (req, res) => {
   try {
     const { jobId, applicationLink } = req.body;
 
-    const exists = await ApplicationTracker.findOne({ jobId });
+    const exists = await ApplicationTracker.findOne({ jobId, userId: req.userId });
 
     if (exists) {
       return res.status(400).json({ message: "Already saved" });
@@ -195,6 +200,7 @@ app.post("/api/applications", async (req, res) => {
     const newApp = new ApplicationTracker({
       jobId,
       applicationLink,
+      userId: req.userId,
     });
 
     const saved = await newApp.save();
@@ -206,16 +212,20 @@ app.post("/api/applications", async (req, res) => {
 });
 
 // UPDATE STATUS / NOTES
-app.patch("/api/applications/:id", async (req, res) => {
+app.patch("/api/applications/:id", verifyToken, async (req, res) => {
   try {
-    const updated = await ApplicationTracker.findByIdAndUpdate(
-      req.params.id,
+    const updated = await ApplicationTracker.findOneAndUpdate(
+      { _id: req.params.id, userId: req.userId },
       {
         ...req.body,
         flagUpdatedDate: Date.now(),
       },
       { new: true }
     ).populate("jobId");
+
+    if (!updated) {
+      return res.status(404).json({ message: "Application not found" });
+    }
 
     res.json(updated);
   } catch (err) {
@@ -224,9 +234,17 @@ app.patch("/api/applications/:id", async (req, res) => {
 });
 
 // DELETE
-app.delete("/api/applications/:id", async (req, res) => {
+app.delete("/api/applications/:id", verifyToken, async (req, res) => {
   try {
-    await ApplicationTracker.findByIdAndDelete(req.params.id);
+    const deleted = await ApplicationTracker.findOneAndDelete({
+      _id: req.params.id,
+      userId: req.userId,
+    });
+
+    if (!deleted) {
+      return res.status(404).json({ message: "Application not found" });
+    }
+
     res.json({ message: "Deleted" });
   } catch (err) {
     res.status(400).json({ message: "Error deleting" });

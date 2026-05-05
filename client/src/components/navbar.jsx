@@ -1,12 +1,16 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 import { useAuth } from "../context/AuthContext";
 import "../css/navbar.css";
 
+const API_BASE = process.env.REACT_APP_API_BASE || "http://localhost:9000";
+
 function Navbar() {
-    const { user, logout } = useAuth();
+    const { user, logout, membershipsVersion } = useAuth();
     const navigate = useNavigate();
     const [open, setOpen] = useState(false);
+    const [memberships, setMemberships] = useState([]);
     const wrapRef = useRef(null);
 
     useEffect(() => {
@@ -17,6 +21,25 @@ function Navbar() {
         document.addEventListener("mousedown", onClick);
         return () => document.removeEventListener("mousedown", onClick);
     }, [open]);
+
+    useEffect(() => {
+        if (!user) {
+            setMemberships([]);
+            return;
+        }
+        async function load() {
+            try {
+                const token = localStorage.getItem("token");
+                const res = await axios.get(`${API_BASE}/api/companies/mine`, {
+                    headers: { Authorization: `Bearer ${token}` },
+                });
+                setMemberships(res.data.data.memberships || []);
+            } catch {
+                setMemberships([]);
+            }
+        }
+        load();
+    }, [user, membershipsVersion]);
 
     const handleLogout = () => {
         setOpen(false);
@@ -66,6 +89,34 @@ function Navbar() {
                                 >
                                     My Profile
                                 </Link>
+
+                                <div className="profile-section-divider" />
+                                <Link
+                                    className="profile-section-header"
+                                    to="/companies"
+                                    onClick={() => setOpen(false)}
+                                >
+                                    Companies
+                                </Link>
+                                {memberships.map((m) => (
+                                    <Link
+                                        key={m.company._id}
+                                        className="profile-item profile-subitem"
+                                        to={`/company/${m.company._id}`}
+                                        onClick={() => setOpen(false)}
+                                    >
+                                        {m.company.companyName}
+                                    </Link>
+                                ))}
+                                <Link
+                                    className="profile-item profile-subitem profile-create"
+                                    to="/companies/new"
+                                    onClick={() => setOpen(false)}
+                                >
+                                    + Create a company
+                                </Link>
+
+                                <div className="profile-section-divider" />
                                 <button
                                     type="button"
                                     className="profile-item profile-logout"

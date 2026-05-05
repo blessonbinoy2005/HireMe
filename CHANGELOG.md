@@ -1,5 +1,20 @@
 # Changelog
 
+## 2026-05-05, Tahsina Mahdiah
+
+- Added Skills section to profile (chip input, add/remove).
+- Removed Account card from profile; name now shown read-only in About.
+- Recruiter onboarding: "Create a company" via avatar dropdown, Companies hub at `/companies`, wizard at `/companies/new`, edit at `/company/:id/edit`.
+- Added `CompanyMember` join table with `admin` / `recruiter` roles; creator becomes admin.
+- Per-user duplicate company name guard on create and edit.
+- Edit Company button inside the company info card on the existing company page.
+- Recruiter applicant view at `/company/:id/jobs/:jobId/applicants` with colored status dropdown and expandable recruiter notes panel.
+- Click applicant name → read-only profile at `/applicants/:userId`.
+- New endpoints: `/api/companies/*`, `/api/jobs/:jobId/applicants`, `PATCH /api/jobs/:jobId/applicants/:applicationId`, `GET /api/profile/:userId`.
+- Hardened `/api/applications`: `userId` now required, all 4 endpoints behind `verifyToken`, scoped per user.
+- Frontend tracker + Save Job flow now send auth headers.
+- Resolved tracker merge conflict: kept main's kanban layout + added auth headers.
+
 ## 2026-04-25, Tahsina Mahdiah
 
 - Added the job seeker profile page at /profile.

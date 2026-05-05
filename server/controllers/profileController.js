@@ -1,4 +1,5 @@
 const JobSeekerProfile = require("../models/JobSeekerProfile");
+const User = require("../models/User");
 
 function ok(data) {
     return { success: true, data };
@@ -40,12 +41,43 @@ function cleanExperience(arr) {
         }));
 }
 
+function cleanSkills(arr) {
+    if (!Array.isArray(arr)) return undefined;
+    const seen = new Set();
+    const out = [];
+    for (const raw of arr) {
+        if (typeof raw !== "string") continue;
+        const trimmed = raw.trim();
+        if (!trimmed) continue;
+        const key = trimmed.toLowerCase();
+        if (seen.has(key)) continue;
+        seen.add(key);
+        out.push(trimmed);
+    }
+    return out;
+}
+
 async function getProfile(req, res) {
     try {
         const profile = await JobSeekerProfile.findOne({ userId: req.userId });
         return res.json(ok({ profile }));
     } catch (err) {
         console.error("getProfile error:", err);
+        return res.status(500).json(fail("Server error loading profile."));
+    }
+}
+
+async function getProfileByUserId(req, res) {
+    try {
+        const { userId } = req.params;
+        const user = await User.findById(userId).select("firstName lastName email role");
+        if (!user) {
+            return res.status(404).json(fail("User not found."));
+        }
+        const profile = await JobSeekerProfile.findOne({ userId });
+        return res.json(ok({ user, profile }));
+    } catch (err) {
+        console.error("getProfileByUserId error:", err);
         return res.status(500).json(fail("Server error loading profile."));
     }
 }
@@ -65,6 +97,10 @@ async function upsertProfile(req, res) {
             const cleaned = cleanExperience(req.body.experience);
             if (cleaned) update.experience = cleaned;
         }
+        if (req.body.skills !== undefined) {
+            const cleaned = cleanSkills(req.body.skills);
+            if (cleaned) update.skills = cleaned;
+        }
 
         const profile = await JobSeekerProfile.findOneAndUpdate(
             { userId: req.userId },
@@ -79,4 +115,4 @@ async function upsertProfile(req, res) {
     }
 }
 
-module.exports = { getProfile, upsertProfile };
+module.exports = { getProfile, getProfileByUserId, upsertProfile };

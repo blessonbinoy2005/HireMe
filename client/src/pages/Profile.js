@@ -7,6 +7,7 @@ import LocationCard from "../components/profile/LocationCard";
 import ContactCard from "../components/profile/ContactCard";
 import EducationList from "../components/profile/EducationList";
 import ExperienceList from "../components/profile/ExperienceList";
+import SkillsList from "../components/profile/SkillsList";
 import "../css/profile.css";
 
 const API_BASE = process.env.REACT_APP_API_BASE || "http://localhost:9000";
@@ -53,31 +54,12 @@ function Profile() {
 
             {loadError && <div className="profile-alert">{loadError}</div>}
 
-            <section className="profile-card">
-                <header className="profile-card-header">
-                    <h2>Account</h2>
-                </header>
-                <div className="profile-grid">
-                    <div className="profile-field">
-                        <div className="profile-label">Name</div>
-                        <div className="profile-value">{user.firstName} {user.lastName}</div>
-                    </div>
-                    <div className="profile-field">
-                        <div className="profile-label">Email</div>
-                        <div className="profile-value">{user.email}</div>
-                    </div>
-                    <div className="profile-field">
-                        <div className="profile-label">Role</div>
-                        <div className="profile-value">{user.role}</div>
-                    </div>
-                </div>
-            </section>
-
             <AboutCard profile={profile} onSaved={handleSaved} />
             <LocationCard profile={profile} onSaved={handleSaved} />
             <ContactCard profile={profile} onSaved={handleSaved} />
             <EducationList education={profile?.education || []} onSaved={handleSaved} />
             <ExperienceList experience={profile?.experience || []} onSaved={handleSaved} />
+            <SkillsList skills={profile?.skills || []} onSaved={handleSaved} />
         </div>
     );
 }

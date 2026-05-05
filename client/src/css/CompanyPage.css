@@ -37,10 +37,32 @@
     padding: 22px;
     margin-bottom: 24px;
   }
-  
+
   .company-info-card h2 {
     font-size: 26px;
     margin-bottom: 14px;
+  }
+
+  .company-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .company-card-header button {
+    background: #7c3aed;
+    border: none;
+    color: white;
+    padding: 10px 16px;
+    border-radius: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+  }
+
+  .company-card-header button:hover {
+    background: #6d28d9;
   }
   
   .company-info-grid {
