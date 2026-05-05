@@ -12,7 +12,6 @@ function Companies() {
     const [memberships, setMemberships] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
-    const [inviteCode, setInviteCode] = useState("");
 
     useEffect(() => {
         if (!user) {
@@ -34,11 +33,6 @@ function Companies() {
         }
         load();
     }, [user]);
-
-    const onRedeem = (e) => {
-        e.preventDefault();
-        alert("Invite redemption coming soon.");
-    };
 
     if (!user) {
         return (
@@ -74,10 +68,7 @@ function Companies() {
                     <p className="companies-empty-text">
                         You're not part of any company yet.
                     </p>
-                    <p>
-                        Create a new company to start posting jobs, or join an existing one with an
-                        invite code.
-                    </p>
+                    <p>Create a new company to start posting jobs.</p>
                 </section>
             ) : (
                 <section className="companies-list">
@@ -110,23 +101,6 @@ function Companies() {
                     ))}
                 </section>
             )}
-
-            <section className="companies-card">
-                <h2>Have an invite code?</h2>
-                <form className="companies-invite-form" onSubmit={onRedeem}>
-                    <input
-                        type="text"
-                        className="companies-input"
-                        value={inviteCode}
-                        onChange={(e) => setInviteCode(e.target.value)}
-                        placeholder="Enter invite code"
-                    />
-                    <button type="submit" className="btn-outline">Join</button>
-                </form>
-                <p className="companies-muted">
-                    Invite redemption is coming soon — for now, ask your team admin to add you.
-                </p>
-            </section>
         </div>
     );
 }
