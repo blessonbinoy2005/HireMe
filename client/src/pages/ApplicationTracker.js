@@ -1,124 +1,118 @@
+/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+
 import Navbar from "../components/navbar";
 import "../css/AT.css";
 
+import { useNavigate } from "react-router-dom";
+
 function ApplicationTracker() {
-  const [applications, setApplications] = useState([]);
+    const [applications, setApplications] = useState([]);
+    const navigate = useNavigate();
 
-  useEffect(() => {
-    fetchApplications();
-  }, []);
+    useEffect(() => {
+        fetchApplications();
+    }, []);
 
-  const fetchApplications = async () => {
-    const res = await axios.get("http://localhost:9000/api/applications");
-    setApplications(res.data);
-  };
+    const fetchApplications = async () => {
+        try {
+            const res = await axios.get("http://localhost:9000/api/applications");
+            console.log("APPLICATIONS FROM DB:", res.data); // 👈 add this
+            setApplications(res.data);
+        } catch (error) {
+            console.error("Failed to load dashboard:", error);
+        }
+    };
 
-  const updateStatus = async (id, newStatus) => {
-    await axios.patch(`http://localhost:9000/api/applications/${id}`, {
-      applicationStatus: newStatus,
-    });
-    fetchApplications();
-  };
+    const updateStatus = async (id, newStatus) => {
+        await axios.post("http://localhost:9000/api/updateStatus", {
+            id,
+            status: newStatus,
+        });
+        fetchApplications();
+    };
 
-  const editNotes = async (id, current) => {
-    const newNote = prompt("Edit notes:", current || "");
-    if (newNote !== null) {
-      await axios.patch(`http://localhost:9000/api/applications/${id}`, {
-        notes: newNote,
-      });
-      fetchApplications();
-    }
-  };
+    const renderCards = (status) => {
+        const filtered = applications.filter((a) => a.status === status);
 
-  const removeApp = async (id) => {
-    await axios.delete(`http://localhost:9000/api/applications/${id}`);
-    fetchApplications();
-  };
+        if (filtered.length === 0) {
+            return <p className="empty-column-text">No applications</p>;
+        }
 
-  const renderCards = (status) => {
-    const filtered = applications.filter(
-      (app) => app.applicationStatus === status
-    );
+        return filtered.map((app) => (
+            <div key={app._id} className="tracker-job-card">
+                <h4>{app.role}</h4>
+                <span>{app.company}</span>
 
-    if (filtered.length === 0) {
-      return <p className="empty-column-text">No applications</p>;
-    }
+                <p>{app.location}</p>
 
-    return filtered.map((app) => {
-      const job = app.jobId;
-
-      return (
-        <div key={app._id} className="tracker-job-card">
-          <div className="tracker-card-header">
-            <div>
-              <h4>{job?.jobTitle}</h4>
-              <span>{job?.companyName}</span>
+                <select
+                    value={app.status}
+                    onChange={(e) => updateStatus(app._id, e.target.value)}
+                >
+                    {["Saved", "Applied", "Interview", "Offer", "Rejected"].map(
+                        (s) => (
+                            <option key={s} value={s}>
+                                {s}
+                            </option>
+                        )
+                    )}
+                </select>
             </div>
+        ));
+    };
 
-            <button onClick={() => removeApp(app._id)}>×</button>
-          </div>
+    return (
+        <>
+            <Navbar />
+            <header>
+                <h1>Application Tracker</h1>
 
-          <p>{job?.address}</p>
+                <div className="tracker-actions">
+                    <button className="save-job-btn" onClick={() => navigate("/jobs")}>
+                        + Save Job
+                    </button>
+                </div>
+            </header>
 
-          <p className="notes-text">
-            {app.notes || "No notes"}
-          </p>
+            {/* BOARD */}
+            <div className="tracker-board">
 
-          <div className="tracker-card-actions">
-            <select
-              value={app.applicationStatus}
-              onChange={(e) => updateStatus(app._id, e.target.value)}
-            >
-              {["saved", "applied", "interview", "offer", "rejected"].map(
-                (s) => (
-                  <option key={s} value={s}>
-                    {s}
-                  </option>
-                )
-              )}
-            </select>
+                {/* ROW 1 */}
+                <div className="tracker-row-3">
+                    <div className="status-column">
+                        <h3>Saved</h3>
+                        {renderCards("Saved")}
+                    </div>
 
-            <button onClick={() => editNotes(app._id, app.notes)}>
-              Notes
-            </button>
+                    <div className="status-column">
+                        <h3>Applied</h3>
+                        {renderCards("Applied")}
+                    </div>
 
-            {app.applicationLink && (
-              <a
-                href={app.applicationLink}
-                target="_blank"
-                rel="noreferrer"
-              >
-                Apply
-              </a>
-            )}
-          </div>
-        </div>
-      );
-    });
-  };
+                    <div className="status-column">
+                        <h3>Interview</h3>
+                        {renderCards("Interview")}
+                    </div>
+                </div>
 
-  return (
-    <>
-      <Navbar />
+                {/* ROW 2 */}
+                <div className="tracker-row-2">
+                    <div className="status-column">
+                        <h3>Offer</h3>
+                        {renderCards("Offer")}
+                    </div>
 
-      <div className="tracker-page">
-        <h1>Application Tracker</h1>
+                    <div className="status-column">
+                        <h3>Rejected</h3>
+                        {renderCards("Rejected")}
+                    </div>
+                </div>
 
-        <div className="tracker-board">
-          {["saved", "applied", "interview", "offer", "rejected"].map(
-            (status) => (
-              <div className="status-column" key={status}>
-                <h3>{status.toUpperCase()}</h3>
-                {renderCards(status)}
-              </div>
-            )
-          )}
-        </div>
-      </div>
-    </>
-  );
+            </div>
+        </>
+    );
 }
 
 export default ApplicationTracker;
