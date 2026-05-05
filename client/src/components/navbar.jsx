@@ -52,7 +52,7 @@ function Navbar() {
     return (
         <nav className="navbar">
             <div className="nav-left">
-                <Link className="nav-link" to="/">Jobs</Link>
+                <Link className="nav-link" to="/">Home</Link>
                 <Link className="nav-link" to="/jobs">Map</Link>
                 <Link className="nav-link" to="/tracker">Tracker</Link>
             </div>
