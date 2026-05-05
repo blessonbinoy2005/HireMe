@@ -1,4 +1,4 @@
-header {
+/* header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -10,7 +10,7 @@ header h1 {
     font-weight: 800;
     color: white;
     margin: 0;
-}
+} */
 
 /* ===== PAGE ===== */
 .tracker-page {
@@ -265,6 +265,7 @@ header h1 {
 }
 
 @media (max-width: 950px) {
+
     .apply-status,
     .result-status {
         grid-template-columns: 1fr;
