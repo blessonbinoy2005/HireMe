@@ -1,4 +1,13 @@
-# How to Run HireMe
+# HireMe
+
+HireMe is a location-focused job search and application tracking app. Job seekers can browse listings on a map, save and apply to jobs, and track applications across five status columns. Recruiters can create a company, post jobs, and review applicants directly from a company dashboard.
+
+## Tech stack
+
+- **Frontend**: React 19, React Router, Leaflet (map), axios
+- **Backend**: Node.js, Express 5, JWT authentication, bcrypt
+- **Database**: MongoDB Atlas via Mongoose
+- **Geocoding**: OpenStreetMap Nominatim
 
 ## Prerequisites
 
@@ -110,3 +119,38 @@ Another process is bound to port 9000. Either kill the existing process — `lso
 
 ### Frontend loads but every API request returns 401
 The JWT in `localStorage` was issued under a different secret and is no longer valid. Log out and log back in to issue a new token.
+
+---
+
+## 6. First-time login
+
+After both servers are running and the browser opens to `http://localhost:3000`:
+
+1. Click **Sign up** in the top-right.
+2. Register with any email and a password of at least 8 characters.
+3. The site logs the new account in automatically and redirects to the home page.
+
+To exercise the recruiter side of the app:
+
+1. From the avatar dropdown (top-right), click **Create a company**.
+2. Fill the wizard with a company name (other fields are optional).
+3. The new company appears in the dropdown and on the `/companies` hub page.
+4. From the company page, post a job using the form on the left.
+5. Returning to `/jobs` as the same account, save the new job — it appears under the **Saved** column on `/tracker`.
+
+There is no separate "recruiter" signup; any signed-in user can create a company.
+
+---
+
+## 7. Seed sample jobs (optional)
+
+The database starts empty. To populate it with sample jobs in the Albany area, run:
+
+```bash
+cd server
+node seedJobs.js
+```
+
+This wipes the `jobs` and `companies` collections and inserts 20 sample jobs across 10 companies in the Albany / Capital Region area.
+
+To search the seeded jobs, click **Jobs** in the navbar (or visit `/jobs`) and use the search bar or filters. Switch between the list view and the map view using the toggle at the top.
